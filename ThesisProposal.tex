@@ -937,16 +937,16 @@ To evaluate the performance of HOR, a test set containing 1783 roof images inclu
 			&\multicolumn{1}{c}{{Precision}} & \multicolumn{1}{c}{{Recall}} & \multicolumn{1}{c}{{Precision}} & \multicolumn{1}{c}{{Recall}}\\
 
 			
-			HIP & 0.9528 & \textcolor{red}{0.8230} & \textcolor{red}{0.9634} & 0.8142 \\
+			HIP & 0.953 & 0.823 & 0.963 & 0.814 \\
 
 			
-			GBL & 0.8767 & \textcolor{red}{0.9005} & \textcolor{red}{0.8864} & 0.8824 \\
+			GBL & 0.877 & 0.901 & 0.886 & 0.882 \\
 
 			
-			FLT & \textcolor{red}{0.7839} & \textcolor{red}{0.9772} & 0.7447 & 0.9589 \\
+			FLT & 0.784 & 0.977 & 0.745 & 0.959 \\
 
 			
-			HHP & 0.8929 & 0.4386 & \textcolor{red}{0.9667} & \textcolor{red}{0.5088} \\ 			 
+			HHP & 0.893 & 0.439 & 0.967 & 0.509 \\ 			 
 			\hline
 			
 		\end{tabular}
@@ -958,7 +958,7 @@ I show the accuracies of each feature using my testing data classified by the cl
 dataset and synthetic models. The accuracies is presented in Table \ref{table: ac}. The precisions calculated by using HOR and HOG combination for hip, gable, flat and half hip(93.1\%, 95.5\%, 98.2\% and 66.7\%) shows a better result than using HOR(89.8\%, 95.0\%, 96.8\% and 63.2\%) and HOG(80.5\%, 88.2\%, 95.4\% and 59.7\%) separately. The results show that for current edge detection approach and training method, HOR alone, or HOR combined with HOG, are considered to be more appropriate as the input feature for roof style recognition system.
 
 \begin{table}[t]
-\caption{The comparison of accuracies between HoG (HOG), Shape Context (SC), HoR (HOR) and their combinations by running Random Forest  approach. I use red font to show highest value among results.}
+\caption{The comparison of accuracies between HoG (HOG), Shape Context (SC), HoR (HOR) and their combinations by running Random Forest  approach.}
 	\centering
 	\scalebox{1.0}
 	{
@@ -974,9 +974,9 @@ dataset and synthetic models. The accuracies is presented in Table \ref{table: a
 			
 			HOR & 0.898 & 0.950 & 0.968 & 0.632 \\
 			
-			LBP & 0.000 & \textcolor{red}{0.986} & 0.631 & 0.000 \\
+			LBP & 0.000 & 0.986 & 0.631 & 0.000 \\
 			
-			HOR+HOG & \textcolor{red}{0.931} & 0.959 & \textcolor{red}{0.982} & \textcolor{red}{0.667} \\
+			HOR+HOG & 0.931 & 0.959 & 0.982 & 0.667 \\
 			
 			HOR+SC & 0.619 & 0.891 & 0.959 & 0.436 \\
 			
