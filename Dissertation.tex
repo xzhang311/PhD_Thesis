@@ -737,7 +737,9 @@ This point migration algorithm is based on a series of intermediate images gener
 
 Once all images get their control points migrated from root image. More synthetic images could be generated using Algorithm \ref{Alg: RNNI}.
 
-\Section{Creating Synthetic Data to Avoid Manual Labelling} One of requirement for a successful machine learning algorithm is abundant labelled data with high quality. Such dataset usually requires a long time and a lot of labor work to be done, which make the labelling work very expensive. In some cases, it is even impossible to finish labelling such as the problem of point cloud roof style recognition I solved in \cite{ZX:14}.
+\Section{Creating Synthetic Data to Avoid Manual Labelling} 
+
+One of requirement for a successful machine learning algorithm is abundant labelled data with high quality. Such dataset usually requires a long time and a lot of labor work to be done, which make the labelling work very expensive. In some cases, it is even impossible to finish labelling such as the problem of point cloud roof style recognition I solved in \cite{ZX:14}.
 
 in \cite{ZX:14}, I proposed a learning based roof style classification algorithm using aerial LiDAR point clouds. The proposed approach is able to classify complex roof styles which may be composed of simple roof styles including: curve, flat, gable, hex, hip, mansard, pyramid, shed, gambrel, dome and unknown. All roof styles classified in my work are listed in 
 
@@ -1031,9 +1033,7 @@ A Chamfer matching algorithm which is based on multiple features was introduced 
 
 Shotton et al.\cite{JS:08} use the Chamfer distance with an additional cost which measures the mismatch of edge orientations given by the average difference in orientation between template edges and the closest edges in target image. Instead of explicitly formulating a separate term of orientation mismatch, the orientation difference is generalized in the computation of the Chamfer distance\cite{ML:10}. A comparison between shape context matching and Chamfer matching is conducted in \cite{AT:03}, where results show that using the Chamfer matching is faster than matching using shape context and that global matching using Chamfer matching is better than using shape context.
 
-\noindent \textbf{Chamfer Matching}
-
-Let $U$ and $V$ be two binary edge images, where $U$ is the target image and $V$ is the template image. Let $\{u_j\}_{j=1}^m$ and $\{v_i\}_{i=1}^n$ be the edge pixels in these images respectively. Let $U(u_j)$ denote the value of image $U$ at location $u_j$.
+\Subsection{Chamfer Matching} Let $U$ and $V$ be two binary edge images, where $U$ is the target image and $V$ is the template image. Let $\{u_j\}_{j=1}^m$ and $\{v_i\}_{i=1}^n$ be the edge pixels in these images respectively. Let $U(u_j)$ denote the value of image $U$ at location $u_j$.
 
 In chamfer matching, I seek a correspondence between $\{u_j\}$ and $\{v_i\}$ under transformation $W$. Assuming that the transformation $W$ between the template and target images is rigid with translation $T$ and rotation $R$, a template edge pixel $v_i$ is transformed into the target image by using following expression:
 \begin{equation}
@@ -1055,11 +1055,7 @@ D(U, V;R, T)=\frac{1}{n}\sum_{1\leq i\leq n}U_{\mathcal{DT}}(v_i^{\scalebox{.5}{
 
 Various types of distance transforms can be produced using different distance metrics $d(\cdot)$. In \cite{AR:66}, city-block distances are used and a two-step linear algorithm is proposed to compute the distances. Euclidean distances approximations are provided by Borgefors\cite{GB:86}, Montanari\cite{UM:68}, and Danielsson\cite{PD:80}. An efficient squared Euclidean distance computation algorithm is described by Felzenszwalb\cite{PF:04}, Felzenszwalb's algorithm can be generalized to compute other distances. 
 
-\noindent \textbf{Extended Chamfer Matching}
-
-I extend the Chamfer matching in several ways.
-
-First, I extend the basic Chamfer matching and obtain additional robustness by jointly minimizing the spatial distance between pixels and the misalignment of edge orientations. A similar distance metric is used in \cite{ML:10} where a linear representation of edges is generated to model the edge orientation. The proposed approach avoids the need for a linear representation of edges by computing the edge orientation directly from the images.
+\Subsection{Extended Chamfer Matching} I extend the Chamfer matching in several ways. First, I extend the basic Chamfer matching and obtain additional robustness by jointly minimizing the spatial distance between pixels and the misalignment of edge orientations. A similar distance metric is used in \cite{ML:10} where a linear representation of edges is generated to model the edge orientation. The proposed approach avoids the need for a linear representation of edges by computing the edge orientation directly from the images.
 
 \begin{figure}[h]
 \centerline{
@@ -1083,14 +1079,8 @@ d(v_i^{\scalebox{.5}{\textit{U}}}, u_j)=\lambda U_{\mathcal{DT}}(v_i^{\scalebox{
 where $\lambda$ is a weight factor that controls the importance of orientation mismatch, $\cos(\alpha_{v_i^{\scalebox{.5}{\textit{U}}}})=\langle{\vec{v}_i^{\scalebox{.5}{\textit{U}}}}, \vec{v_i} \rangle$ measures the orientation mismatch, and it is assumed that $\vec{v}_i^{\scalebox{.5}{\textit{U}}}$ and $\vec{v_i}$ are normalized.
 
 A squared Euclidean norm is used in the first term of Equation (\ref{Equ: distance metric}), which gives a larger penalty to mismatched pixels. A method to generate the squared Euclidean norm distance transform in linear time is described in \cite{PF:04}.
-\\
 
-\begingroup
-    \fontsize{11pt}{0}\selectfont
-     \noindent  \textbf{Edge Distance Variance}
-\endgroup
-\vspace{2 mm}\\
-To have a robust matching result, the matching error of a pixel $v_i$ should not solely depend on $d(v_i^{\scalebox{.5}{\textit{U}}}, u_j)$. This is because it is possible that $v_i^{\scalebox{.5}{\textit{U}}}$ will be an incorrect edge pixel in the target image that happened to have a small error. Based on this consideration, I argue that to get a confident measurement of the matching error it is necessary to take into account the matching error of neighbouring pixels.
+\Subsection{Edge Distance Variance} To have a robust matching result, the matching error of a pixel $v_i$ should not solely depend on $d(v_i^{\scalebox{.5}{\textit{U}}}, u_j)$. This is because it is possible that $v_i^{\scalebox{.5}{\textit{U}}}$ will be an incorrect edge pixel in the target image that happened to have a small error. Based on this consideration, I argue that to get a confident measurement of the matching error it is necessary to take into account the matching error of neighbouring pixels.
 
 \begin{figure}
 \centerline{
@@ -1338,8 +1328,6 @@ There are cases when ignoring additional patterns in actual data are very diffic
 
 This done from different aspects in \cite{ZX:14}. First, features in this work are designed to characterize spatial and context information of local point.
 
-\noindent  $\bullet$ \textbf{Spatial Features}
-
 Spatial features take into account the neighborhood of each point. So the spatial features are powerful to describe geometry characteristics in the point's neighborhood and so assist in producing a distinct characterization of it. Let $p_i$ be a key point. Let $N_i$ be a neighborhood of the point, containing neighbors in a radius of $\mu$ (0.6 meters in my experiments). I denote the spatial features at $p_i$ using $\mathcal{S}_i$.
 
 \noindent \textbf{i.\;Eigen Features (EF).} I compute the eigenvalues: $\lambda_1, \lambda_2, \lambda_3$ of the covariance matrix of neighbors $N_i$ centred at $p_i$. I then add following features for $p_i$: $\lambda_1$, $\lambda_2$, $\lambda_3$, $\lambda_3-\lambda_2$, $\lambda_2-\lambda_1$, $\lambda_1/(\lambda_1+\lambda_2+\lambda_3)$, $\lambda_2/(\lambda_1+\lambda_2+\lambda_3)$, $\lambda_3/(\lambda_1+\lambda_2+\lambda_3)$, yielding 8 features in total. These features capture the non-planarity of points around $p_i$.
@@ -1495,10 +1483,10 @@ To evaluate the performance of my approach and measure the improvement in using 
 \begin{tabular}{ccccccccccccc}
 \hline \hline
 &\multicolumn{6}{c}{{Chicago}} & \multicolumn{6}{c}{{San Francisco}}\\ 
-\hline
 
-&\multicolumn{3}{c}{{Precision}} & \multicolumn{3}{c}{{Recall}} & \multicolumn{3}{c}{{Precision}} & \multicolumn{3}{c}{{Recall}}\\
-\hline
+
+&\multicolumn{3}{c}{{-------Precision-------}} & \multicolumn{3}{c}{{-------Recall-------}} & \multicolumn{3}{c}{{-------Precision-------}} & \multicolumn{3}{c}{{-------Recall-------}}\\
+
 
 &\multicolumn{1}{c}{GMM} & {KM} & {Ours} & {GMM} & {KM} & {Ours} & {GMM} & {KM} & {Ours} & {GMM} & {KM} & {Ours}\\
 \hline
