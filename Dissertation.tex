@@ -359,7 +359,9 @@ Due to a technique called Generative Adversarial Network (GAN) introduced by \ci
 
 \Section{A Brief Introduction of Proposed Methods} \label{dataspace: solution}
 
-In my approaches, I create synthetic data in data space. Creating synthetic data in data space has several advantages. First, it is the most intuitive way to create new data, because it is easy to judge the quality of the new data. Second, creating data in data space let us understand my data more clearly and deeply, because in order to create new data, I have to understand the characteristics and structure of original data. Having these understanding, it is more likely I will invent some better features that would boost the performance of machine learning process later on. The feasibility of my method is based on an observation that data of most problems can be converted to a parametric model, in my cases 2D and 3D models controlled by multiple control points. By adjust values of parameters I are able to derive many synthetic data. 
+There are several advantages for creating synthetic data in data space. First, it is the most intuitive way to create new data, because it is easy to judge the quality of the new data. Second, creating data in data space let us understand my data more clearly and deeply, because in order to create new data, I have to understand the characteristics and structure of original data. These understanding provides a clear path for designing better features that would boost the performance of machine learning process later on. 
+
+In general, based on methodology used in my research, proposed data synthesis approaches in my research can be divided to two groups. The feasibility of the proposed approaches in first group is based on an observation that data of most problems can be converted to a parametric model, uniform templates, in my research to solve problems in image and 3D geometry domain, parametric prototypes of 2D and 3D instances controlled by moving control points are either automatrically learned or designed. By learning and designing such models, the resulting parametric models captures bot global and local shape, geometry and color information of underlying data. Deriviation of more synthetic data is achievable by adjustment of control points. A lot of time, explicitly come up with a conclusive template may not be that easy, especially for natural image. Development of deep neural network model of recent years make implicitly learning a template become feasible where the learned neural network itself becomes a conclusive model for underlying dataset, and input to the network will serve as a control signal for data synthesis.
 
 In my research, the approach of creating synthetic data in data space primarily solves two types of problems. First, by creating more synthetic data, I solved problems of rarity learning. Because as I mentioned that both actual data and synthetic data are subset of entire dataset. By creating massive number of synthetic data, the approach enriches and compensates the part in data space where actual data does not reach, so that a more complete distribution of the data and a more tight boundary between classes of data are provided to machine learning algorithm to learn. Second, for some problems, using synthetic data will greatly reduce labor works spending on labelling actual data. Because instead of label huge number of actual data, using my method, by indicating a label of data, I can generate as many as possible synthetic data I need. For these two problems, I will use the rest of this chapter to discuss the details of creating synthetic data in my previous works. Also, I am going to talk about the problems and challenges in my future research.at the end of this chapter.
 
@@ -742,6 +744,36 @@ This point migration algorithm is based on a series of intermediate images gener
 \end{figure}
 
 Once all images get their control points migrated from root image. More synthetic images could be generated using Algorithm \ref{Alg: RNNI}.
+
+\Subsection{Generating visualization of text description using neural network.} Visualization of description in a text sentence is not only a fundamental problem in artificial intelligence that connects natural language processing and computer vision, but also provide an simple way of synthesizing images by just describe an image in your mind. we have seen a performance improvement in image caption generation through the adoption of recurrent neural network (RNN) in past two or three years. The reverse process (text to image) is a more interesting thus much more challenging task in the sense that many information of concrete details of to be generated images are not encoded in provided descriptions. Therefore the underlying system has to not only precisely parse semantic mearning of input sentences (one image ca be described in different ways and a sentence description can also be translated to many different representations), but also has to be able to derive missing information from sentences. 
+
+In this work, a neural network based approach has been introduced to address this problem. By learning a corresponding information between sentence semantic mearning and local parts of target images, we illustrate that sentence semantic meaning is able to capture details from vairous descriptions. This determines the robustness of understanding image details. 
+
+The primary contribution of this work is a attention based neural network system that automatically map sentence semantics to corresponding part on generated image thus enable abilities to synthesize more realistic images.
+
+Since the proposed network structure heavily depends on Generative Adversarial Networks (GAN) and Long Short Term Memory (LSTM) recurrent neural network, there is a need to understand basic concept of these two network models.
+
+\noindent \textbf{GAN:} Generative adversarial networks are composed of a generator $G$ and discriminator $D$, which are co-trained in a competitive manner. $D$ learns to discriminate real images from fake ones generated by $G$, while $G$ learns to generate fake images from latent variables $z$ and tries to fool $D$. In other words, $G$ and $D$ play the following two-player minimax game with value function $V(G, D)$:
+
+\begin{equation}
+\min_{G}\max_{D}V(D, G) = E_{x\sim p_{data}(x)}\left[ \log{D(x)}\right] + E_{z\sim p_{z}(z)}\left[\log(1-D(G(z))) \right]
+\end{equation} 
+
+The generator $G$ implicitly defines a probability distribution $p_{g}$ as the distribution of the samples $G(z)$ obtained when $z\sim p_{z}$. Therefore, we would like the training process of GAN to converge to a good estimator of $p_{data}$ if given enough capacity and training time.　For more details of generative adversarial networks, please refer to \cite{goodfellow2014generative}\cite{arjovsky2017wasserstein}.
+
+\noindent \textbf{LSTM:} 
+
+
+
+
+
+
+
+
+
+
+
+
 
 \Section{Creating Synthetic Data to Avoid Manual Labelling} 
 
