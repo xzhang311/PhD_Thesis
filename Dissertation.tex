@@ -781,7 +781,7 @@ The vector formulas for a vanilla LSTM layer forward pass are given below. Here 
 \begin{align*}
 z^t &= g(W_z x^t + R_z y^{t-1} + b_z) \;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;  \text{block input}\\
 i^t &= \sigma(W_i x^t + R_i y^{t-1} + p_i \odot c^{t-1} + b_i) \;\;\;\;\;\;\;\;\;\;\;\;\;\;\;  \text{input gate}\\
-f^t &= \sigma(W_f x^t + R_f y^{t-1} + p_f\odot c^(t-1) + b_f)\;\;\;\;\;\;  \text{forget gate}\\
+f^t &= \sigma(W_f x^t + R_f y^{t-1} + p_f\odot c^{t-1} + b_f)\;\;\;\;\;\;\;\;\;\;\;  \text{forget gate}\\
 c^t &= i^t \odot z^t + f^t \odot c^{t-1} \;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;  \text{cell state}\\
 o^t &= \sigma(W_o x^t + R_o y^{t-1} + p_o \odot c^t + b_o) \;\;\;\;\;\;\;\;\;\;\;\;\;\;\;  \text{output gate}\\
 y^t &= o^t \odot h(c^t) \;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;　\text{block output}
@@ -794,7 +794,7 @@ y^t &= o^t \odot h(c^t) \;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;
 \begin{tabular}{c}
 \resizebox{0.9\textwidth}{!}{\rotatebox{0}{ \includegraphics{./Pic/PDF/Txt2Img/network_struct-crop.pdf}}} 
 \end{tabular}} 
-\caption{Network structure of proposed text to image approach}
+\caption{Network structure of the proposed text to image synthesis approach. The notation G represents generator and notation D represents discriminator.}
 \label{fig: txt2img} 
 \end{figure}
 
@@ -820,7 +820,12 @@ Left: Synthesis results of using concatenated word embeddings. Right: Real image
 
 
 
-Given a $k$ words sentence, I first map each word to a 400 dimension feature called Word2vec embeddings \cite{mikolov2013efficient} which better encodes latent semantic meaning of words. The generator network is denoted $G$: $\mathbb{R}^{400\times k} \times \mathbb{R}^{D\times k}$, the discriminator as $D$: $\mathbb{R}^{D\times k} \rightarrow \lbrace0, 1\rbrace^k$, $D$ is the dimension of the image. 
+Given a $k$ words sentence $s$, I first map each word to a 400 dimension feature $w_i, 0\leq i \leq k$ called Word2vec embeddings \cite{mikolov2013efficient} which provides a uniform representation of works in feature space and can better encode sementic meaning of words. Then to enable information passing between words and thus learn sementic meaning of an input sentence, after two fully-connected layers, the tranformed work embeddings are enterred to a LSTM unit. 
+
+Following the LSTM unit, inference proceeds as in a normal deconvolutional network. The outputs from deconvolutional network $Deconv(w_i)$ represents semantic meanings of input sentence network learned so far. Then $Deconv(w_i)$ is feed-forwarded to two separate convolutional neural networks. The first convolutional neural network serves as the generator in GAN framework and will respossible for synthesizing images. I denote the synthesized image as $\bar{x}=G(Deconv(w_i))$ The another convolutoinal neural network takes as input a concatenation of real image and output from previous deconvolutional neural network. During the process of learning semantics of input sentence, except the last word,  the semantic meaning of the sentence learned upto each word should correspond to not whole image but only some parts of target real image. So, the mask will be applied to the real image $x$ to mask out unrelated parts of image. Thus the second convolutional network is going to generate a soft mask denoted by $m_i = Conv_{mask}(Deconv(w_i)\oplus x)$, where $\oplus$ represents concatenation operation. It is necessary to include real image $x$ in generation of the mask, because the second network need such information for mapping between learned sentence semantics $Deconv(w_i)$ and visual correspondence on the real image $x$. 
+
+For discriminator we follow steps described on \cite{reed2016generative} to add a sentence feature $\varphi(s)$ as condition. Adding condition and turn the GAN network used in the proposed work to a conditional GAN is necessary in text to image synthesis task. 
+
 
  
 
