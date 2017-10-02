@@ -835,9 +835,11 @@ For discriminator we follow steps described on \cite{reed2016generative} to add 
 
 \Section{Creating Synthetic Data to Avoid Manual Labelling} 
 
-One of requirement for a successful machine learning algorithm is abundant labelled data with high quality. Such dataset usually requires a long time and a lot of labor work to be done, which make the labelling work very expensive. In some cases, it is even impossible to finish labelling such as the problem of point cloud roof style recognition I solved in \cite{ZX:14}.
+One of requirement for a successful machine learning algorithm is abundant labelled data with high quality. Such dataset usually requires a long time and a lot of labor work to be done, which maks the labelling work very expensive and time consuming. 
 
-in \cite{ZX:14}, I proposed a learning based roof style classification algorithm using aerial LiDAR point clouds. The proposed approach is able to classify complex roof styles which may be composed of simple roof styles including: curve, flat, gable, hex, hip, mansard, pyramid, shed, gambrel, dome and unknown. All roof styles classified in my work are listed in 
+\Subsection{Synthesize Data for Roof Recognition} One example that needs extensive labeling works is object recognition through point cloud. To learn semantic spatial meaning of each point in data requires millions labelling for each single object composed of 3D points, which is impossible to be finished mannually.
+
+To avoid such heavy labelling work, in \cite{ZX:14}, I proposed a learning based roof style classification algorithm using aerial LiDAR point clouds. The proposed approach is able to classify complex roof styles which may be composed of simple roof styles including: curve, flat, gable, hex, hip, mansard, pyramid, shed, gambrel, dome and unknown. All roof styles classified in my work are listed in 
 
 \begin{figure}[ht]
 \centerline{ %
@@ -940,6 +942,78 @@ In addition to size variation, I also consider erosions of roofs, because it is 
 \caption{Illustration of erosion in my data. Three different levels of filtering are applied to each roof. In total, including original version, four versions are used in my work.}
 \label{fig: All Semantic Points}
 \end{figure} 
+
+\Subsection{Unsupervisly Learning of Optical Flow} Optical flow is a classic problem in computer vision, successfully predict of which will extensively help tasks such as object detection, object tracking and so on. Despite the abundant literature on the topic it is still challenging. Many approaches solving the optical flow problem are based on variational method which formulated as an energy minimization problem. This paradign relies on the photometric consistency of color and gradient, as well as spatial smoothness of natural images. While being attractive, such methods can get stuck inlocal minima with error accumulation across scales and tend to fail against large displacements. 
+
+While optical flow estimation is well-established, little has been done using end-to-end convolutional network until recent work \cite{7410673}\cite{Ranjan_2017_CVPR}. Rather than rely on hand designed features, FlowNet\cite{7410673} poses optical flowas a supervised learning task and utilize an end-to-end convolutional network to predict the flow field. DispNet \cite{mayer2016large} extends this idea to disparity and scene flow estimation. However these neural network methods require strong supervision for training. Specifically, training of these networks can only be possible when per-pixel labelling of optical flow is avaialable.
+
+To skip manuual labelling of optical flow vectors, in my work, I propose training a convolutional neural network for optical flow estimation in an unsupervised manner. The proposed neural network is designed so that a cost function that is differentiable with respect to the unknown optical flow field and allows the backpropagation of the error and the end to end training of the proposed neural network.
+
+\Subsubsection{The proposed network design}
+A few attempts are made in the past to unsupervisely learn optical flow or dense scene correspondence \cite{ahmadi2016unsupervised}\cite{ren2017unsupervised}\cite{DBLP:journals/corr/YuHD16}. Conceptual design of Neural networks in all existing unsupervised optical flow learning approach can be regarded as a Spatial Transformation Network \cite{NIPS2015_5854} with three major components: the flow prediction part which outputs the pixel-level flow vector; a bilinear sampling from spatial transform network \cite{NIPS2015_5854} for generating the transformed frame via the translation output by the localization net; the final layer involving a loss function regarding the disrepancy between the target image and the warped one from the source image. Following the same framework of using spatial transform network, the network structure of the proposed approach is given in Figure \ref{fig: optical flow net struct}. The network is mainly composed with encoder and decoder. In each layers of encoder, convolution followed by a downsampling will be emploied to each scale of images. For decoder, it is a inverted process of encoder, in which deconvolution is used to upsampling the learned feature maps. I link the output at each level of encoder to the decoder at the same level. Such shortcut is demonstrated to be useful for gradient back propogation and can compensate for information loss during downsampling \cite{ronneberger2015u} 
+
+\begin{figure}[ht]
+\centerline{
+\begin{tabular}{c}
+  \resizebox{0.8\textwidth}{!}{\rotatebox{0}{
+  \includegraphics{Pic/PDF/OpticalFlow/NetStruct.pdf}}}
+\end{tabular}}
+\caption{Illustration of network structure used in the proposed unsupervised optical flow learning neural network. Parts in red dash frame are novel contribution of my work.}
+\label{fig: optical flow net struct}
+\end{figure}
+
+
+\Subsubsection{Proposed Method}
+Although the existing approaches perform well on most cases. It is known that neural network based optical flow estimation can not reliably estimate small motions \cite{Ilg_2017_CVPR}, especially when different magnitude of motions are detected in a same image. The problem actually is understandable from point of view of neural network training process. This is because network neurons are particularly trained to be sensitive to certain patterns detected in images, which means activations/output values of neurons in neural networks are normal distributions centerred at some specific values. Thus when there are multiple type of motions with different magnitude of flows existing in an image, it is very challenging for neural network to encode all kinds of flows in a single flow prediction.
+
+In my proposed approach, I look into this problem and design the output module of the neural network at each image scale in a divide and conquer manner that multiple optical flows are predicted using multiple divided output layers. A strong smoothness constraint is imposed to each flow images assuming that this will cosntrain each output layer only be responsible for predicting a certain type of flows detected in images. This part is my novel contribution for this problem, the part is high lighted in Figure \ref{fig: optical flow net struct} using red dashed box.
+
+Given a image pair $I_0, I_1\in \mathbb{R}^{H\times W\times C}$, where $H, W, C$ represent height, width and channels of images, the network predicts $k$ flow images $F_{\xi}= \{f_i\}_{i=1}^k, f_i = (\bold{u_i}, \bold{v_i})$, where $u_i, v_i\in \mathbb{R}^{H\times W}$ for each image scale $\xi$, conquering multiple flow images is equivalent to fuse multiple flow images into one image. Fusing is very challenging, only a portion of each flow image will be fused to final optical flows and there should be no intersection among all of these flows. To achieve these goal, $k$ corresponding masks $M_{\xi}=\{m_i\}_{i=1}^k, m_i \in \mathbb{R}^{H\times W}$ are generated along optical flow images. To still keep network's differentiability, masks are outputted for corresponding flow image as a pixel's confidence value of being gotten fused to final optical flow image. To do so mask is generated using hyperbolic tangent function $tanh()$ whose value are scale to be between $0$ and $1$. 
+
+Given a indicator function $I(m_i)$ representing a binary image of mask with all entries that are not maximal along the channel axis being set to zero The final optical flow image $f_{\xi}=(\bold{u}_{\xi}, \bold{v}_{\xi})$ can be computed as:
+
+\begin{equation}
+\label{eqn: fuse optical flow}
+f_{\xi} = \sum_{i=0}^k I(m_i)\times m_i \times f_i
+\end{equation} 
+
+Spatial transform network \cite{NIPS2015_5854} implement a bilinear sampling when images transformed. This requires the transformation using reverse mapping. So, to estimate a optical flow from $I_0$ to $I_1$, if done in reverse manner, $I_1$ will be transformed using obtained flow whose resulting image will used to compare with $I_0$. Therefore, combine losses from all four image scales, the objective function of entire system is defined as:
+
+\begin{equation}
+E = \sum_{\xi = 1}^4(T(I_1, \bold{u}_{\xi}, \bold{v}_{\xi})-I_0(i, j))^2 + \varphi(\bold(u)_{\xi}, \bold(u)_{\xi})
+\end{equation}
+where $T$ represents transformation function. A smoothness constraint $\varphi(\bold{u}_{\xi}, \bold{v}_{\xi})$ is added to objective. Followingthe traditional regularization term used to constraint deformation field \cite{rohlfing2003volume}\cite{ashburner1999nonlinear}, the regularization term is defined as a bendijng energe of the deformation field which is:
+\begin{align*}
+\varphi(\bold(u)_{\xi}, \bold(u)_{\xi}) = & \sum ((\frac{\partial^2\bold{u}}{\partial \bold{x}^2})^2+(\frac{\partial^2\bold{u}}{\partial \bold{y}^2})^2+2(\frac{\partial^2\bold{u}}{\partial x \partial y})^2) + \\ 
+& \sum ((\frac{\partial^2\bold{v}}{\partial \bold{x}^2})^2+(\frac{\partial^2\bold{v}}{\partial \bold{y}^2})^2+2(\frac{\partial^2\bold{v}}{\partial x \partial y})^2)
+\end{align*}
+
+
+
+
+
+The data loss measures the discrepancy between one input image and the warped image from the other image, based on the predicted optical flowfield. The smooth term models the difference among the neighboring flow predictions. Here we could interpret the loss as a surrogate relating to the desired properties of the ground-truth, while we do not know what the ground-truth is, we know how it should behave.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 \clearpage
 
