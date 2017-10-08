@@ -826,22 +826,14 @@ Following the LSTM unit, inference proceeds as in a normal deconvolutional netwo
 
 For discriminator we follow steps described on \cite{reed2016generative} to add a sentence feature $\varphi(s)$ as condition. Adding condition and turn the GAN network used in the proposed work to a conditional GAN is necessary in text to image synthesis task. 
 
-
- 
-
-
-
-
-
 \Section{Creating Synthetic Data to Avoid Manual Labelling} 
-
 One of requirement for a successful machine learning algorithm is abundant labelled data with high quality. Such dataset usually requires a long time and a lot of labor work to be done, which maks the labelling work very expensive and time consuming. 
 
 \Subsection{Synthesize Data for Roof Recognition} One example that needs extensive labeling works is object recognition through point cloud. To learn semantic spatial meaning of each point in data requires millions labelling for each single object composed of 3D points, which is impossible to be finished mannually.
 
 To avoid such heavy labelling work, in \cite{ZX:14}, I proposed a learning based roof style classification algorithm using aerial LiDAR point clouds. The proposed approach is able to classify complex roof styles which may be composed of simple roof styles including: curve, flat, gable, hex, hip, mansard, pyramid, shed, gambrel, dome and unknown. All roof styles classified in my work are listed in 
 
-\begin{figure}[ht]
+\begin{figure}[h]
 \centerline{ %
 \begin{tabular}{c}
 \resizebox{0.6\textwidth}{!}{\rotatebox{0}{ \includegraphics{./Pic/PDF/renderresultAllTypesTilt.pdf}}} 
@@ -852,7 +844,52 @@ To avoid such heavy labelling work, in \cite{ZX:14}, I proposed a learning based
 
 This method can easily accommodates more new roof styles by re-training of the new dataset with the new roof styles added. Because my method is implemented based on a bag of works schema. 
 
-\begin{figure}[h]
+The difficulty in this work is to produce a codebook of important roof points. This codebook can then be used for a bag of words recognition. Learning these codebook using unsupervised learning is most straight forward. However, unsupervised learning is often misguided easily by the data and detects uninteresting patterns within the data. 
+
+Instead, I propose to integrate existing knowledge of roof structure and cluster the points of target roof
+styles into several semantic classes which can then be used as code words in the bag of words model. I use synthetic variants of these code words to train a semantics point classifier. Thus, I manually represent the codes in the codebook as semantic parts of the roof structure produced by manually analysing roof style models. I then learn a point semantics classifier using a large amount of synthetic variants of roof styles. There are 33 codes in the codebook used in this work. The key points that are used to produce the code words are shown in Figure \ref{fig: All Semantic Points}. 
+
+\begin{figure}[th]
+\centerline{
+\begin{tabular}{c}
+  \resizebox{0.99\textwidth}{!}{\rotatebox{0}{
+  \includegraphics{Pic/PDF/TableOfAllRoofTypes2.pdf}}}
+\end{tabular}}
+\caption{Illustration of all semantic points used in my work, red sphere on each roof represent the typical location of semantic point, the color bar under each image correspond to all color labels used in previous demo.}
+\label{fig: All Semantic Points}
+\end{figure} 
+
+As can be observed in Figure \ref{fig: All Semantic Points}, some roof styles shown in Figure \ref{fig: baseroofs} are used to produce multiple key points. The synthetic variants of the codes are derived from these based models in two ways. First, I generate roof models by changing the parameters of the roofs including height, width and slope. Since it is inaccurate and unreasonable to assume any distribution for these parameters and I want to generate models that can cover as much as possible cases in real world, I evenly draw these parameters from their given ranges. I present the size derivation of each base roof in below:
+
+{\noindent \textbf{Flat:}} A little slop is allowed in my flat roof, so I change the angle between flat surface and ground plane from 0 degree to 10 degree, as an exception, distribution of roofs in between these two angles are even.
+\\ \textbf{Gable:} The opening width of gable roof is set to be 10 meters, I change two parameters for gable. Firstly, the median ridge is shifted, starting from center location and end at 2.5 meters from center. Secondly, by fixing opening width, the dihedral angle between slop surface and ground is changed from 20 degree to 75 degree, where mean is 30 degree.
+\\ \textbf{Hip:} In addition to how I derive from gable roof, the angle between side slop surface and ground plane is changed from 20 degree to 75 degree where mean is 30 degree.
+\\ \textbf{L-Joint:} For each of two branches, derivation of gable is applied.
+\\ \textbf{T-Joint:} For each of two branches(vertical and horizontal), derivation of gable is applied.
+\\ \textbf{X-Joint:} For each of two branches which cross with each other, derivation of gable is applied.
+\\ \textbf{Gambrel:} For two slop surface, the angle between surface tangent direction and z direction is changed. Suppose the angle of upper surface with z is $a_0$ and angle of lower surface with z is $a_1$. Using 45 degree as mean, $a_0$ and $a_1$ are changed from 20 to 75 degree, subject to $a_0-a_1\geq 20$ degree.
+\\ \textbf{Hex:} Synchronously change the slop angle of side face from 20 degree to 75 degree, where mean is 30 degree.
+\\ \textbf{Mansard:} Synchronously change the slop angle of two side face from 20 degree to 75 degree using 30 degree as mean.
+\\ \textbf{Pyramid:} Similar to Hex
+\\ \textbf{Shed:} Change slop angle from 20 degree to 75 degree using 30 degree as mean.
+\\ \textbf{Loft:} For slop surface, Change slop angle from 20 degree to 75 degree using 30 degree as mean and for gable part, please refer to derivation of gable.
+
+\begin{figure}[htbp!]
+\centerline{
+\begin{tabular}{c}
+  \resizebox{0.8\textwidth}{!}{\rotatebox{0}{
+  \includegraphics{Pic/PDF/deform2.pdf}}}
+\end{tabular}}
+\caption{Illustration of erosion in my data. Three different levels of filtering are applied to each roof. In total, including original version, four versions are used in my work.}
+\label{fig: All Semantic Points}
+\end{figure} 
+
+In addition to size variation, I also consider erosions of roofs, because it is common in my data to have eroded roofs due to unknown reasons. Four versions with different magnitude of erosion are derived using approach described in \cite{GG07} for each generated roof which are shown in Figure.
+
+\Subsection{Unsupervisly Learning of Optical Flow} Optical flow is a classic problem in computer vision, successfully predict of which will extensively help tasks such as object detection, object tracking and so on. Despite the abundant literature on the topic it is still challenging. Many approaches solving the optical flow problem are based on variational method which formulated as an energy minimization problem. This paradign relies on the photometric consistency of color and gradient, as well as spatial smoothness of natural images. While being attractive, such methods can get stuck inlocal minima with error accumulation across scales and tend to fail against large displacements. 
+
+
+\begin{figure}[htbp!]
 \centerline{
 \begin{tabular}{cccc}
   \resizebox{0.1\textwidth}{!}{\rotatebox{0}{
@@ -901,50 +938,6 @@ This method can easily accommodates more new roof styles by re-training of the n
 \label{fig: baseroofs}
 \end{figure}
 
-The difficulty in this work is to produce a codebook of important roof points. This codebook can then be used for a bag of words recognition. Learning these codebook using unsupervised learning is most straight forward. However, unsupervised learning is often misguided easily by the data and detects uninteresting patterns within the data. 
-
-Instead, I propose to integrate existing knowledge of roof structure and cluster the points of target roof
-styles into several semantic classes which can then be used as code words in the bag of words model. I use synthetic variants of these code words to train a semantics point classifier. Thus, I manually represent the codes in the codebook as semantic parts of the roof structure produced by manually analysing roof style models. I then learn a point semantics classifier using a large amount of synthetic variants of roof styles. There are 33 codes in the codebook used in this work. The key points that are used to produce the code words are shown in Figure \ref{fig: All Semantic Points}. 
-
-\begin{figure}[h]
-\centerline{
-\begin{tabular}{c}
-  \resizebox{0.99\textwidth}{!}{\rotatebox{0}{
-  \includegraphics{Pic/PDF/TableOfAllRoofTypes2.pdf}}}
-\end{tabular}}
-\caption{Illustration of all semantic points used in my work, red sphere on each roof represent the typical location of semantic point, the color bar under each image correspond to all color labels used in previous demo.}
-\label{fig: All Semantic Points}
-\end{figure} 
-
-As can be observed in Figure \ref{fig: All Semantic Points}, some roof styles shown in Figure \ref{fig: baseroofs} are used to produce multiple key points. The synthetic variants of the codes are derived from these based models in two ways. First, I generate roof models by changing the parameters of the roofs including height, width and slope. Since it is inaccurate and unreasonable to assume any distribution for these parameters and I want to generate models that can cover as much as possible cases in real world, I evenly draw these parameters from their given ranges. I present the size derivation of each base roof in below:
-
-{\noindent \textbf{Flat:}} A little slop is allowed in my flat roof, so I change the angle between flat surface and ground plane from 0 degree to 10 degree, as an exception, distribution of roofs in between these two angles are even.
-\\ \textbf{Gable:} The opening width of gable roof is set to be 10 meters, I change two parameters for gable. Firstly, the median ridge is shifted, starting from center location and end at 2.5 meters from center. Secondly, by fixing opening width, the dihedral angle between slop surface and ground is changed from 20 degree to 75 degree, where mean is 30 degree.
-\\ \textbf{Hip:} In addition to how I derive from gable roof, the angle between side slop surface and ground plane is changed from 20 degree to 75 degree where mean is 30 degree.
-\\ \textbf{L-Joint:} For each of two branches, derivation of gable is applied.
-\\ \textbf{T-Joint:} For each of two branches(vertical and horizontal), derivation of gable is applied.
-\\ \textbf{X-Joint:} For each of two branches which cross with each other, derivation of gable is applied.
-\\ \textbf{Gambrel:} For two slop surface, the angle between surface tangent direction and z direction is changed. Suppose the angle of upper surface with z is $a_0$ and angle of lower surface with z is $a_1$. Using 45 degree as mean, $a_0$ and $a_1$ are changed from 20 to 75 degree, subject to $a_0-a_1\geq 20$ degree.
-\\ \textbf{Hex:} Synchronously change the slop angle of side face from 20 degree to 75 degree, where mean is 30 degree.
-\\ \textbf{Mansard:} Synchronously change the slop angle of two side face from 20 degree to 75 degree using 30 degree as mean.
-\\ \textbf{Pyramid:} Similar to Hex
-\\ \textbf{Shed:} Change slop angle from 20 degree to 75 degree using 30 degree as mean.
-\\ \textbf{Loft:} For slop surface, Change slop angle from 20 degree to 75 degree using 30 degree as mean and for gable part, please refer to derivation of gable.
-
-In addition to size variation, I also consider erosions of roofs, because it is common in my data to have eroded roofs due to unknown reasons. Four versions with different magnitude of erosion are derived using approach described in \cite{GG07} for each generated roof which are shown in Figure.
-
-\begin{figure}[h]
-\centerline{
-\begin{tabular}{c}
-  \resizebox{0.8\textwidth}{!}{\rotatebox{0}{
-  \includegraphics{Pic/PDF/deform2.pdf}}}
-\end{tabular}}
-\caption{Illustration of erosion in my data. Three different levels of filtering are applied to each roof. In total, including original version, four versions are used in my work.}
-\label{fig: All Semantic Points}
-\end{figure} 
-
-\Subsection{Unsupervisly Learning of Optical Flow} Optical flow is a classic problem in computer vision, successfully predict of which will extensively help tasks such as object detection, object tracking and so on. Despite the abundant literature on the topic it is still challenging. Many approaches solving the optical flow problem are based on variational method which formulated as an energy minimization problem. This paradign relies on the photometric consistency of color and gradient, as well as spatial smoothness of natural images. While being attractive, such methods can get stuck inlocal minima with error accumulation across scales and tend to fail against large displacements. 
-
 While optical flow estimation is well-established, little has been done using end-to-end convolutional network until recent work \cite{7410673}\cite{Ranjan_2017_CVPR}. Rather than rely on hand designed features, FlowNet\cite{7410673} poses optical flowas a supervised learning task and utilize an end-to-end convolutional network to predict the flow field. DispNet \cite{mayer2016large} extends this idea to disparity and scene flow estimation. However these neural network methods require strong supervision for training. Specifically, training of these networks can only be possible when per-pixel labelling of optical flow is avaialable.
 
 To skip manuual labelling of optical flow vectors, in my work, I propose training a convolutional neural network for optical flow estimation in an unsupervised manner. The proposed neural network is designed so that a cost function that is differentiable with respect to the unknown optical flow field and allows the backpropagation of the error and the end to end training of the proposed neural network.
@@ -952,7 +945,7 @@ To skip manuual labelling of optical flow vectors, in my work, I propose trainin
 \Subsubsection{The proposed network design}
 A few attempts are made in the past to unsupervisely learn optical flow or dense scene correspondence \cite{ahmadi2016unsupervised}\cite{ren2017unsupervised}\cite{DBLP:journals/corr/YuHD16}. Conceptual design of Neural networks in all existing unsupervised optical flow learning approach can be regarded as a Spatial Transformation Network \cite{NIPS2015_5854} with three major components: the flow prediction part which outputs the pixel-level flow vector; a bilinear sampling from spatial transform network \cite{NIPS2015_5854} for generating the transformed frame via the translation output by the localization net; the final layer involving a loss function regarding the disrepancy between the target image and the warped one from the source image. Following the same framework of using spatial transform network, the network structure of the proposed approach is given in Figure \ref{fig: optical flow net struct}. The network is mainly composed with encoder and decoder. In each layers of encoder, convolution followed by a downsampling will be emploied to each scale of images. For decoder, it is a inverted process of encoder, in which deconvolution is used to upsampling the learned feature maps. I link the output at each level of encoder to the decoder at the same level. Such shortcut is demonstrated to be useful for gradient back propogation and can compensate for information loss during downsampling \cite{ronneberger2015u} 
 
-\begin{figure}[ht]
+\begin{figure}[htbp!]
 \centerline{
 \begin{tabular}{c}
   \resizebox{0.8\textwidth}{!}{\rotatebox{0}{
@@ -980,7 +973,7 @@ f_{\xi} = \sum_{i=0}^k I(m_i)\times m_i \times f_i
 Spatial transform network \cite{NIPS2015_5854} implement a bilinear sampling when images transformed. This requires the transformation using reverse mapping. So, to estimate a optical flow from $I_0$ to $I_1$, if done in reverse manner, $I_1$ will be transformed using obtained flow whose resulting image will used to compare with $I_0$. Therefore, combine losses from all four image scales, the objective function of entire system is defined as:
 
 \begin{equation}
-E = \sum_{\xi = 1}^4(T(I_1, \bold{u}_{\xi}, \bold{v}_{\xi})-I_0(i, j))^2 + \varphi(\bold(u)_{\xi}, \bold(u)_{\xi})
+E = \sum_{\xi = 1}^4(T(I_1, \bold{u}_{\xi}, \bold{v}_{\xi})-I_0(i, j))^2 + \lambda\cdot\varphi(\bold(u)_{\xi}, \bold(u)_{\xi})
 \end{equation}
 where $T$ represents transformation function. A smoothness constraint $\varphi(\bold{u}_{\xi}, \bold{v}_{\xi})$ is added to objective. Followingthe traditional regularization term used to constraint deformation field \cite{rohlfing2003volume}\cite{ashburner1999nonlinear}, the regularization term is defined as a bendijng energe of the deformation field which is:
 \begin{align*}
@@ -988,23 +981,62 @@ where $T$ represents transformation function. A smoothness constraint $\varphi(\
 & \sum ((\frac{\partial^2\bold{v}}{\partial \bold{x}^2})^2+(\frac{\partial^2\bold{v}}{\partial \bold{y}^2})^2+2(\frac{\partial^2\bold{v}}{\partial x \partial y})^2)
 \end{align*}
 
-
-
-
-
 The data loss measures the discrepancy between one input image and the warped image from the other image, based on the predicted optical flowfield. The smooth term models the difference among the neighboring flow predictions. Here we could interpret the loss as a surrogate relating to the desired properties of the ground-truth, while we do not know what the ground-truth is, we know how it should behave.
 
+\begin{figure}[ht]
+\centerline{
+\begin{tabular}{c}
+  \resizebox{0.8\textwidth}{!}{\rotatebox{0}{
+  \includegraphics{Pic/PDF/OpticalFlow/TransformResultsWithMasks.pdf}}}
+\end{tabular}}
+\caption{Results of image transformation using predicted optical flows. Images are grouped in three rows each. In each group, a pair of images inputted to network are in first row and third row. Results of using optical flow to transform first row images are given in second row.}
+\label{fig: optical flow transform results}
+\end{figure}
+
+\Subsubsection{Evaluation}
+The proposed approach is evaluated on two well-known dataset for optical flow.
+
+\noindent \textbf{MPI-Sintel}: This dataset \cite{Butler:ECCV:2012} is obtained from an animated movie which pays special attention to realistic image effects. The dataset provides naturalistic video sequences that are challenging for current methods. It is designed to encourage research on long-range motion, motion blur, multi-frame analysis, non-rigid motion. Following the same training pattern used by existing works, I use both the 'clean' and 'final' version images to trian the model.
+
+\noindent \textbf{Flying Chairs}: The dataset \cite{DFIB15} is a recently released synthetic benchmark which consists of segmented background images from Flickr on which the random images of 3D chairs are overlayed. For training, as the same with \cite{DFIB15} I split the dataset into 22232 samples for training and 640 samples for testing, respectively.
+
+\noindent \textbf{KITTI2012}: The KITTI dataset \cite{Geiger2012CVPR} contains photos shot in city streets from a driving car. It offers greater challenges regarding with large displacements, different materials, a large variety of lighting conditions. KITTI2015 consists of 194 training pairs and 195 test pairs. The training set is used for cross-validataion and to monitor the learning progress. For training, I use raw KITTI data from the city, residential and road classes, where groundtruth flow is unavailable. The raw data is comprised of 82,958 iamge pairs. 
+
+I compare the state of the art methods including EpicFlow \cite{revaud2015epicflow}, DeepFlow \cite{weinzaepfel2013deepflow}, FlowNet \cite{reed2016generative}, DSTFlow \cite{ren2017unsupervised}. For the supervised learnign method FlowNet, I term it as FlowNet (C+S) which is trained on 'Chairs' dataset and further finetuned on 'Sintel' dataset. To highlight the effectiveness of introducing mask mechanism in this work, I create another network which is similar to the one shown in Figure \ref{fig: optical flow net struct} but with mask module remove. I term the resulting network structure as 'NoMask' in my comparison.
+
+\begin{table}[]
+\centering
+\caption{Average endpoint errors (EPE) over occluded (OCC) and non-occluded areas (NOC) of our networks compard to peer methods and the proposed method on different datasets. }
+\label{tab: optical flow comparison}
+\begin{tabular}{lcccccc}
+\hline
+\hline
+ & Chairs & KITTI & SC occ & SC noc & SF occ & SF noc \\ \hline
+Epicflow & 2.94 & 1.52 & 4.12 & 1.36 & 6.29 & 3.06 \\
+Deepflow & 3.53 & 1.53 & 5.38 & 1.77 & 7.21 & 3.34 \\
+FlowNetS (C+S)* & 3.04 & 5.23 & 6.96 & N.A. & 7.76 & N.A. \\
+DSTFlow & 5.11 & 4.02 & 10.40 & 5.20 & 11.11 & 5.92 \\
+NoMask & 5.03 & 4.11 & 10.78 & 6.22 & 12.32 & 6.03 \\
+Proposed & 4.53 & 3.67 & 9.56 & 4.89 & 10.21 & 4.84 \\ \hline
+\end{tabular}
+\end{table}
+
+\Subsubsection{Results}
+The experiment results using benchmark data is shown in Table \ref{tab: optical flow comparison}. All supervised approaches are given a star behind their name. As expected supervised method trained with the groundtruth flow provided by the datasets in most cases outperforms all unsupervised approaches. However, the scenario where sufficient dense groundtruth is available is generally unrealistic with real imagery. For KITTI dataset, it exemplifies the advantages of unsupervised approaches, where abundant dense groundtruth flow with real images is unavailable. Among all three unsupervised approaches, 'NoMask' network structure is very similar to DSTFlow, thus results of two networks are similar as well. The proposed network achieves best results among three unsupervised methods due to use of mask module. 
 
 
 
+Examples of generated intermediately masks are show in Figure \ref{fig: optical flow masks}. As illustrated in the figure, objects with different motion are separated by masks. Such separation will improve the optical flow estimation for corresponding optical flow images of each mask, because, by separating object with different motions, corresponding optical flow image only need to focus their prediction on certain type of optical flows. In my experiments, I also observe a better generalization by using mask module in networks.
 
-
-
-
-
-
-
-
+\begin{figure}[ht]
+\centerline{
+\begin{tabular}{c}
+  \resizebox{0.95\textwidth}{!}{\rotatebox{0}{
+  \includegraphics{Pic/PDF/OpticalFlow/Masks.pdf}}}
+\end{tabular}}
+\caption{Examples of pairs of images used as input of the proposed network and automatically generated masks are shown in this figure. }
+\label{fig: optical flow masks}
+\end{figure}
 
 
 
