@@ -1026,7 +1026,7 @@ The experiment results using benchmark data is shown in Table \ref{tab: optical 
 
 
 
-Examples of generated intermediately masks are show in Figure \ref{fig: optical flow masks}. As illustrated in the figure, objects with different motion are separated by masks. Such separation will improve the optical flow estimation for corresponding optical flow images of each mask, because, by separating object with different motions, corresponding optical flow image only need to focus their prediction on certain type of optical flows. In my experiments, I also observe a better generalization by using mask module in networks.
+Examples of generated intermediately masks are show in Figure \ref{fig: optical flow masks}. As illustrated in the figure, objects with different motion are separated by masks. Such separation will improve the optical flow estimation for corresponding optical flow images of each mask, because by separating object with different motions, corresponding optical flow image only need to focus their prediction on certain type of optical flows, which will producing a more accurate flow estimation. Results of generated optical flows are show in Figure \ref{fig: optical flow comparison}. The generated optical flows are compared to results from DSTFlow \cite{ren2017unsupervised}. It could be seen from the figure that, the proposed approach not only generated flows that much closer to the ground truth results, due to using of mask module in this work, the boundaries of flow between different objects are much more smooth than DSTFlow.
 
 \begin{figure}[ht]
 \centerline{
@@ -1038,13 +1038,163 @@ Examples of generated intermediately masks are show in Figure \ref{fig: optical 
 \label{fig: optical flow masks}
 \end{figure}
 
+\begin{figure}[ht]
+\centerline{
+\begin{tabular}{ccccc}
+  \resizebox{0.17\textwidth}{!}{\rotatebox{0}{
+  \includegraphics{Pic/PDF/OpticalFlow/Flows/ImgPairs/0000000-img0.pdf}}}
+  &
+  \resizebox{0.17\textwidth}{!}{\rotatebox{0}{
+  \includegraphics{Pic/PDF/OpticalFlow/Flows/ImgPairs/0000000-img1.pdf}}}
+  &
+  \resizebox{0.17\textwidth}{!}{\rotatebox{0}{
+  \includegraphics{Pic/PDF/OpticalFlow/Flows/GroundTruth/0000000-gt.pdf}}}
+  &
+  \resizebox{0.17\textwidth}{!}{\rotatebox{0}{
+  \includegraphics{Pic/PDF/OpticalFlow/Flows/FlowNet/0000000_flow1.pdf}}}
+  &
+  \resizebox{0.17\textwidth}{!}{\rotatebox{0}{
+  \includegraphics{Pic/PDF/OpticalFlow/Flows/Proposed/0000000_flow1.pdf}}}
+  \\    
+  \resizebox{0.17\textwidth}{!}{\rotatebox{0}{
+  \includegraphics{Pic/PDF/OpticalFlow/Flows/ImgPairs/0000001-img0.pdf}}}
+  &
+  \resizebox{0.17\textwidth}{!}{\rotatebox{0}{
+  \includegraphics{Pic/PDF/OpticalFlow/Flows/ImgPairs/0000001-img1.pdf}}}
+  &
+  \resizebox{0.17\textwidth}{!}{\rotatebox{0}{
+  \includegraphics{Pic/PDF/OpticalFlow/Flows/GroundTruth/0000001-gt.pdf}}}
+  &
+  \resizebox{0.17\textwidth}{!}{\rotatebox{0}{
+  \includegraphics{Pic/PDF/OpticalFlow/Flows/FlowNet/0000001_flow1.pdf}}}
+  &
+  \resizebox{0.17\textwidth}{!}{\rotatebox{0}{
+  \includegraphics{Pic/PDF/OpticalFlow/Flows/Proposed/0000001_flow1.pdf}}}  
+  \\
+  \resizebox{0.17\textwidth}{!}{\rotatebox{0}{
+  \includegraphics{Pic/PDF/OpticalFlow/Flows/ImgPairs/0000002-img0.pdf}}}
+  &
+  \resizebox{0.17\textwidth}{!}{\rotatebox{0}{
+  \includegraphics{Pic/PDF/OpticalFlow/Flows/ImgPairs/0000002-img1.pdf}}}
+  &
+  \resizebox{0.17\textwidth}{!}{\rotatebox{0}{
+  \includegraphics{Pic/PDF/OpticalFlow/Flows/GroundTruth/0000002-gt.pdf}}}
+  &
+  \resizebox{0.17\textwidth}{!}{\rotatebox{0}{
+  \includegraphics{Pic/PDF/OpticalFlow/Flows/FlowNet/0000002_flow1.pdf}}}
+  &
+  \resizebox{0.17\textwidth}{!}{\rotatebox{0}{
+  \includegraphics{Pic/PDF/OpticalFlow/Flows/Proposed/0000002_flow1.pdf}}} 
+  \\
+  \resizebox{0.17\textwidth}{!}{\rotatebox{0}{
+  \includegraphics{Pic/PDF/OpticalFlow/Flows/ImgPairs/0000003-img0.pdf}}}
+  &
+  \resizebox{0.17\textwidth}{!}{\rotatebox{0}{
+  \includegraphics{Pic/PDF/OpticalFlow/Flows/ImgPairs/0000003-img1.pdf}}}
+  &
+  \resizebox{0.17\textwidth}{!}{\rotatebox{0}{
+  \includegraphics{Pic/PDF/OpticalFlow/Flows/GroundTruth/0000003-gt.pdf}}}
+  &
+  \resizebox{0.17\textwidth}{!}{\rotatebox{0}{
+  \includegraphics{Pic/PDF/OpticalFlow/Flows/FlowNet/0000003_flow1.pdf}}}
+  &
+  \resizebox{0.17\textwidth}{!}{\rotatebox{0}{
+  \includegraphics{Pic/PDF/OpticalFlow/Flows/Proposed/0000003_flow1.pdf}}} 
+  \\
+  \resizebox{0.17\textwidth}{!}{\rotatebox{0}{
+  \includegraphics{Pic/PDF/OpticalFlow/Flows/ImgPairs/0000004-img0.pdf}}}
+  &
+  \resizebox{0.17\textwidth}{!}{\rotatebox{0}{
+  \includegraphics{Pic/PDF/OpticalFlow/Flows/ImgPairs/0000004-img1.pdf}}}
+  &
+  \resizebox{0.17\textwidth}{!}{\rotatebox{0}{
+  \includegraphics{Pic/PDF/OpticalFlow/Flows/GroundTruth/0000004-gt.pdf}}}
+  &
+  \resizebox{0.17\textwidth}{!}{\rotatebox{0}{
+  \includegraphics{Pic/PDF/OpticalFlow/Flows/FlowNet/0000004_flow1.pdf}}}
+  &
+  \resizebox{0.17\textwidth}{!}{\rotatebox{0}{
+  \includegraphics{Pic/PDF/OpticalFlow/Flows/Proposed/0000004_flow1.pdf}}} 
+  \\
+  \resizebox{0.17\textwidth}{!}{\rotatebox{0}{
+  \includegraphics{Pic/PDF/OpticalFlow/Flows/ImgPairs/0000005-img0.pdf}}}
+  &
+  \resizebox{0.17\textwidth}{!}{\rotatebox{0}{
+  \includegraphics{Pic/PDF/OpticalFlow/Flows/ImgPairs/0000005-img1.pdf}}}
+  &
+  \resizebox{0.17\textwidth}{!}{\rotatebox{0}{
+  \includegraphics{Pic/PDF/OpticalFlow/Flows/GroundTruth/0000005-gt.pdf}}}
+  &
+  \resizebox{0.17\textwidth}{!}{\rotatebox{0}{
+  \includegraphics{Pic/PDF/OpticalFlow/Flows/FlowNet/0000005_flow1.pdf}}}
+  &
+  \resizebox{0.17\textwidth}{!}{\rotatebox{0}{
+  \includegraphics{Pic/PDF/OpticalFlow/Flows/Proposed/0000005_flow1.pdf}}} 
+  \\
+  \resizebox{0.17\textwidth}{!}{\rotatebox{0}{
+  \includegraphics{Pic/PDF/OpticalFlow/Flows/ImgPairs/0000006-img0.pdf}}}
+  &
+  \resizebox{0.17\textwidth}{!}{\rotatebox{0}{
+  \includegraphics{Pic/PDF/OpticalFlow/Flows/ImgPairs/0000006-img1.pdf}}}
+  &
+  \resizebox{0.17\textwidth}{!}{\rotatebox{0}{
+  \includegraphics{Pic/PDF/OpticalFlow/Flows/GroundTruth/0000006-gt.pdf}}}
+  &
+  \resizebox{0.17\textwidth}{!}{\rotatebox{0}{
+  \includegraphics{Pic/PDF/OpticalFlow/Flows/FlowNet/0000006_flow1.pdf}}}
+  &
+  \resizebox{0.17\textwidth}{!}{\rotatebox{0}{
+  \includegraphics{Pic/PDF/OpticalFlow/Flows/Proposed/0000006_flow1.pdf}}}
+  \\ 
+  Img 1 & Img 2 & Ground Truth & DSTFlow & Proposed
+  \\
+\end{tabular}}
+\caption{Comaprison of optical flows.}
+\label{fig: optical flow comparison}
+\end{figure}
 
+Supervised and unsupervised learning of optical flow although have different advantages and as well as disadvantages. They never conflict with each other in this optical flow prediction projects. When ground truth labeling is available, supervised method provide a more precise way of predicting the optical flow. Unsupervise method work as a back up plan when ground truth labeling is not available. In order to increase the accuracy of optical flow estimation to a better level, I condcut another experiment. In this experiment, I combined datasets with know optical flow labels and optical flow predicted using the proposed approach. The combined dataset will be trained supervisely and tested on benchmark dataset.　The idea behind this experiment is that I am going to show when multiple datasets are avaiable but only a small portion of them has ground truth labelings. By training data with true labelings and predicted labelings, we will obtain a better optical flow prediction.
 
+To compare, seven groups of experiments are designed. The details and configuration of the experiments are shown in Table \ref{tab: optical flow experiments setup}
 
+\begin{table}[]
+\centering
+\caption{Experiment setups to show predicted optical flows using the proposed approach could improve optical flow predict when combining with data with ground truth optical flow labels.}
+\label{tab: optical flow experiments setup}
+\begin{tabular}{lccc}
+\hline\hline
+\multicolumn{1}{c}{} & \multicolumn{1}{c}{Train} & Fine Tune & Test \\ \hline
+Exp. 1 (sup) & KITTI w. labels & N.A. & KITTI test set \\ 
+Exp. 2 (sup) & Chairs w. labels & KITTI w. labels & KITTI test set \\ 
+Exp. 3 (sup) & \begin{tabular}[c]{@{}l@{}}Chairs w. labels + \\ KITTI w. labels\end{tabular} & N.A. & KITTI test set \\ 
+Exp. 4 (unsup) & KITTI raw w/o. labels & N.A. & KITTI test set \\ 
+Exp. 5 (sup) & \begin{tabular}[c]{@{}l@{}}Chairs w. labels + \\ KITTI w. predicted labels\end{tabular} & N.A. & KITTI test set \\ 
+Exp. 6 (sup) & \begin{tabular}[c]{@{}l@{}}Chairs w. labels +\\ KITTI w. predicted labels\end{tabular} & KITTI w. labels & KITTI test set \\ 
+Exp. 7 (sup) & \begin{tabular}[c]{@{}l@{}}Chair w. labels +\\ KITTI w. predicted labels +\\ KITTI w. labels\end{tabular} & N.A. & KITTI test set \\ \hline 
+\end{tabular}
+\end{table}
 
+KITTI datasets are used as testing set in all of these experiments. 194 KITTI image pairs with ground truth optical flow labels are used as training data in experiment 1 and 3. In experiment 2, KITII training data is used to fine tune the network initially trained using Chairs dataset. There are 82,958 raw image paris in KITTI dataset. 40.000 random picks of them are used to unsupervisely train the proposed network structure. The trained network will then make predictions for remaining 42,958 image pairs of KITTI. We then use predicted optical flows of 42,958 image pairs as  training data in experiment 5, 6 and 7. I use network structure of FlowNet for supervised training for all the supervised experiments. To fine tune pretrained networks, in experiment 2 and 3, 5 epochs using KITTI label data are used to in fine tune.
 
+Experiments resutls are shown in Figure \ref{tab: optical flow experiments train using predicted flows}. From the figure, result of experiment 4 overperforms results of experiment 1, 2 and 3. In experiment 1, 2 and 3, ground truth optical flow from only 194 KITTI image pairs are supervisely trained. Even mixed with Chairs data, the result is still overwhelmed by result from experiment 4 whose network is unsupervisely trained using the proposed approach. This comparison again validate the effectiveness of the propoaed approach. Much better results are obtained in experiments 5, 6 and 7. All three experiments used predicted KITTI optical flow in their training phase. This shows two things: first, predicted optical flow using the proposed approach is of high quality and precision which is also valdiate by experiment 4, second, when mixed predicted KITTI flows with ground truth optical flow from Chair dataset, the training process can learn a better generalization from two different dataset so as to gain an improvement. 
 
-
+\begin{table}[thbp]
+\centering
+\caption{Experiment results.}
+\label{tab: optical flow experiments train using predicted flows}
+\begin{tabular}{cc}
+\hline
+\hline
+       & EPE  \\ \hline
+Exp. 1 & 5.23 \\ 
+Exp. 2 & 4.43 \\ 
+Exp. 3 & 4.69 \\ 
+Exp. 4 & 3.67 \\ 
+Exp. 5 & 2.21 \\ 
+Exp. 6 & 2.28 \\ 
+Exp. 7 & 2.31 \\ \hline
+\end{tabular}
+\end{table}
 
 
 \clearpage
