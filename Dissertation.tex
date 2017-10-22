@@ -306,13 +306,13 @@ It is generally accepted that the performance of a learning process could be inc
 
 In my research, to better simulate actual data, a series of methods that synthesize more data are introduced. These methods can be separated into two groups. In the first group, different from existing methods, my methods of data synthesis are based on usage of a centralized representation of actual data. I call such centralized representation a prototype in this proposal because the prototype can characterize essential structures and patterns of actual data. The prototype in my work is modeled as a parametric model of control points and could be learned using semi-automatic or automatic approaches. Interpolating between existing data then randomly drawing synthetic data from a known distribution of existing data provides a general way of data synthesis. Methods in the second group are machine learning based methods. Along with the development of deep learning especially in computer vision area recently. The Large dataset has become a necessary factor to guarantee a desired performance of neural networks.  Image level or even pixel level data synthesis become even valuable and essential in these tasks. In my work, depending on learning and computational power of deep neural networks, I explored and proposed ways that synthesize image-level data using neural networks. 
 
-The proposed approach has been used in many object recognition problems in my research. The results can be found in \cite{Zhang2014Autoencoder}\cite{AndiZang2015}\cite{ZX:14}.
+The proposed approach has been used in many object recognition problems in my research. The results can be found in \cite{Zhang2014Autoencoder}\cite{AndiZang2015}\cite{ZX:14}\cite{Ouyang:17}\cite{ZX17:OpticalFlow}
 
 \Subsection{Learning From Synthetic Data} Enougth training data usually is a good sign of a successful training process. However, even there is enough synthetic data that can be learned from, directly learning from these data may cause failed or degraded classification results. This is because the synthetic data is generated using a data prototype(parametric model) which is a simplified version of data representation. Since it is usually very challenging for a prototype to generate extra details of actual data. This fact results in nonequivalence of information contained between actual data and synthetic data.
 
 In my work, to eliminate the artifacts during learning process brought by essential differences between actual data and synthetic data, I design feature extraction approaches that are going to avoid or hide the inequalities between two types of data. To achieve this goal, two feature extraction strategies are proposed in my work and prove to be useful. First, extracted features have to be able to ignore irregular features or pattterns of actual data and only capture essential characteristics shared by both actual and synthetic data. Second, instead of ignoring particular elements owned by actual data, there should be a post-processing after feature extraction that compensates these extra information for synthetic data. Guided by these two strategies, several techniques and algorithms are developed in my work.
 
-The preliminary results of the proposed feature extraction strategies could be found in \cite{Zhang2014Autoencoder}\cite{AndiZang2015}\cite{ZX:14}.
+Results of the proposed feature extraction strategies could be found in \cite{Zhang2014Autoencoder}\cite{AndiZang2015}\cite{ZX:14}\cite{ZX:14b}.
 
 %Feature extraction especially extracting good features is acrucial step in every machine learning algorithm. Although some machine learning algorithm could select most distinguishable features automatically. Good features not only better distinguish the characteristics of different objects, they ease and speed up the learning process as well. Feature extraction becomes even challenging and harder in terms of capability of distinguishability When synthetic data is introduced in a learning process. Because on the one hand, features extracted from synthetic data have to recognize the actual data that are in a same class as synthetic ones. On the other hand, features must be still different enough for objects in different classes.
 %
@@ -322,6 +322,7 @@ The preliminary results of the proposed feature extraction strategies could be f
 
 Different from existing work, here we solve the problem from a more general perspective by eliminating the \textit{synthetic gap} as a domain adaptation problem. A general framework based on a neural network with novel architecture is proposed. The neural network is trained as a regressor which could map synthetic data to real data and find out the potential transformation between two types of data. Thus it is able to close the gap between two data. With this mechanism synthetic data could better simulate actual data and used in a machine learning procedure.
 
+Results of the proposed feature extraction strategies could be found in \cite{7424358}\cite{ZX17:SMAE}
 
 %Designing features that extracts the most essential structure and knowledge from both actual data and synthetic data achieves good results in learning algorithm. However, we notice in my experiments that in some situation, there still exists inevitable differences between features extracted from two kinds of data. We name this type of difference as: synthetic gap. Learning from a synthetic dataset that has synthetic gap will cause learning method biased to synthetic data thus result in a low accuracy in recognizing actual data. 
 
@@ -332,6 +333,8 @@ Different from existing work, here we solve the problem from a more general pers
 Data synthesis through prototype can be used to improve performance of many applications suffering from unbalanced data distribution and eliminate the weight brought by noise samples. However, due to the nature of the methodology, it is limited to some specific problems.  A more general solution is to directly create synthetic data representation to weaken impacts of noisy samlpes and to achieve a balance distribution between classes in the data.
 
 Synthesizing new data in feature space is hard. Because data representation in feature space is abstract that the actual meaning of the data in data space is hard to interpret. To know where to synthesize new data so as to balance the data distribution and improve the performance of underlying machine learning tasks such as classification, it requires a deep understanding of distribution of entire dataset. To achieve this goal, I proposed a theorotically gauranteed minority oversampling algorithm which takes both data distribution of minority and majority class into account and can synthesize data to achive better classification results compared to existing methods. Details of the algorithm could be found in Chapter \ref{chapter: feature space}.
+
+Results of this contribution have been published on \cite{Zhang:2016:CCG:2983323.2983789}
 
 \clearpage
 
@@ -798,6 +801,7 @@ y^t &= o^t \odot h(c^t) \;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;
 \label{fig: txt2img} 
 \end{figure}
 
+
 According to my literature search, some other works \cite{DBLP:journals/corr/DongZMG17}\cite{reed2016generative}\cite{zhang2016stackgan} tried to address text to image mapping in the past. Instead of co-training LSTM and GAN networks, a single sentence embedding of the input sentence is trained using a separate LSTM to minimize differences between sentence embedding and image embeddings in a same latent space. In my work, there is no such separate process to learn both image and text embeddings. The proposed approach indeed treat $k$ word embeddings of a sentence with $k$ words as input and the training process is going to train both LSTM and GAN in the same process. Reasons behind this design come from two factors. First, GAN network performs more like a black box, is well demonstrated its ability to mapping distribution of input data to the distribution of target data. Then, instead of having a separate process to bridging a gap between text distribution and image distribution in a latent space, GAN will be responsible for such mapping. Second, learning a good embedding for an entire sentence using a separate learning process does not necessarily mean the learned embedding will cause an improvement in the text to image synthesis. Because in training of a text to image synthesis the input text embedding and image will be correlated in latent space different from the latent space previously used to align two embeddings. To validate this point, I use a network structure described in \cite{reed2016generative} and replace their learned sentence embedding with a sentence feature that simply concatenates word2vec embeddings of each word in a sentence. The synthesized results are show in Figure \ref{fig: skipvec_vs_word2vec}. It could be observed from the figure that image synthesized using concatenation of word embeddings shows a better diversity and can recover details of real images much better. 
 
 \begin{figure}[t]
@@ -822,6 +826,62 @@ Left: Synthesis results of using concatenated word embeddings. Right: Real image
 
 Given a $k$ words sentence $s$, I first map each word to a 400 dimension feature $w_i, 0\leq i \leq k$ called Word2vec embeddings \cite{mikolov2013efficient} which provides a uniform representation of works in feature space and can better encode semantic meaning of words. Then to enable information passing between words and thus learn the semantic meaning of an input sentence, after two fully-connected layers, the transformed work embeddings are entered to an LSTM unit. 
 
+\begin{figure}[thb]
+\centerline{
+\begin{tabular}{cc}
+  \resizebox{0.4\textwidth}{!}{\rotatebox{0}{
+  \includegraphics{Pic/PDF/Txt2Img/482.pdf}}}
+  &
+  \resizebox{0.4\textwidth}{!}{\rotatebox{0}{
+  \includegraphics{Pic/PDF/Txt2Img/794.pdf}}}
+  \\
+  \begin{tabular}{c}This flower is yellow in color, \\with petals that are skinny and long.
+  \end{tabular}
+  &
+  \begin{tabular}{c}This flower is yellow and white \\in color, with petals that are oval.
+  \end{tabular}
+  \\	
+  \resizebox{0.4\textwidth}{!}{\rotatebox{0}{
+  \includegraphics{Pic/PDF/Txt2Img/896.pdf}}}
+  &
+  \resizebox{0.4\textwidth}{!}{\rotatebox{0}{
+  \includegraphics{Pic/PDF/Txt2Img/899.pdf}}}
+  \\
+  \begin{tabular}{c}The flower has petals that are \\thin and yellow, with yellow stamen.
+  \end{tabular}
+  &
+  \begin{tabular}{c}This flower has broad, dark yellow \\petals and matching yellow stamen.
+  \end{tabular}
+  \\
+  \resizebox{0.4\textwidth}{!}{\rotatebox{0}{
+  \includegraphics{Pic/PDF/Txt2Img/915.pdf}}}
+  &
+  \resizebox{0.4\textwidth}{!}{\rotatebox{0}{
+  \includegraphics{Pic/PDF/Txt2Img/958.pdf}}}
+  \\
+  \begin{tabular}{c}This is a flower that has \\four yellow round petals.
+  \end{tabular}
+  &
+  \begin{tabular}{c}This flower is yellow in color, \\with petals that are ruffled.
+  \end{tabular}
+  \\
+  \resizebox{0.4\textwidth}{!}{\rotatebox{0}{
+  \includegraphics{Pic/PDF/Txt2Img/7.pdf}}}
+  &
+  \resizebox{0.4\textwidth}{!}{\rotatebox{0}{
+  \includegraphics{Pic/PDF/Txt2Img/300.pdf}}}
+  \\
+  \begin{tabular}{c}This flower has petals that are \\purple with yellow centers and white stamen.
+  \end{tabular}
+  &
+  \begin{tabular}{c}Scalloped multi-layered pink and yellow \\petals surrounding a yellow pistil.
+  \end{tabular}
+  \\
+\end{tabular}}
+\caption{Examples of synthesized flower images. Please notice how each synthesized images correspond to works in description.}
+\label{fig: txt2img results}
+\end{figure}
+
 Following the LSTM unit, inference proceeds as in a normal deconvolutional network. The outputs from deconvolutional network $Deconv(w_i)$ represents semantic meanings of input sentence network learned so far. Then $Deconv(w_i)$ is feed-forwarded to two separate convolutional neural networks. The first convolutional neural network serves as the generator in GAN framework and will responsible for synthesizing images. I denote the synthesized image as $\bar{x}=G(Deconv(w_i))$ The another convolutional neural network takes as input a concatenation of real image and output from the previous deconvolutional neural network. During the process of learning semantics of input sentence, except the last word,  the semantic meaning of the sentence learned up to each word should correspond to not a whole image but only some parts of target real image. So, the mask will be applied to the real image $x$ to mask out separate parts of the image. Thus the second convolutional network is going to generate a soft mask denoted by $m_i = Conv_{mask}(Deconv(w_i)\oplus x)$, where $\oplus$ represents concatenation operation. It is necessary to include real image $x$ in the generation of the mask because the second network needs such information for mapping between learned sentence semantics $Deconv(w_i)$ and visual correspondence on the real image $x$. 
 
 For discriminator we follow steps described on \cite{reed2016generative} to add a sentence feature $\varphi(s)$ as condition. Adding condition and turn the GAN network used in the proposed work to a conditional GAN is necessary for text to image synthesis task. 
@@ -835,9 +895,7 @@ I evaluate the proposd approach on 102 Category Flower Dataset \cite{Nilsback08}
 
 In total, the flower dataset contains 8,189 images. The dataset is divided into a training set, a validataion set and a test set. The training set and and test set consist of 4000 images per class. The remaining 189 images are used as validation set.
 
-The proposed neural network is trained 600 epoches. trained network is applied on validation set given description of validation set. Some synthesized images are shown below. 
-
-
+The proposed neural network is trained 600 epoches. trained network is applied on validation set given description of validation set. Examples of synthesized images and associated text descriptions are shown in Figure \ref{fig: txt2img results}.   
 
 \Section{Creating Synthetic Data to Avoid Manual Labelling} 
 One of the requirements for a successful machine learning algorithm is sufficient labeled data with high quality. Such dataset usually requires a long time and a lot of labor work to be done, which maks the labeling work very expensive and time-consuming. 
@@ -1020,16 +1078,16 @@ I compare the state of the art methods including EpicFlow \cite{revaud2015epicfl
 \centering
 \caption{Average endpoint errors (EPE) over occluded (OCC) and non-occluded areas (NOC) of our networks compard to peer methods and the proposed method on different datasets. }
 \label{tab: optical flow comparison}
-\begin{tabular}{lcccccc}
+\begin{tabular}{lccccccc}
 \hline
 \hline
- & Chairs & KITTI & SC occ & SC noc & SF occ & SF noc \\ \hline
-Epicflow & 2.94 & 1.52 & 4.12 & 1.36 & 6.29 & 3.06 \\
-Deepflow & 3.53 & 1.53 & 5.38 & 1.77 & 7.21 & 3.34 \\
-FlowNetS (C+S)* & 3.04 & 5.23 & 6.96 & N.A. & 7.76 & N.A. \\
-DSTFlow & 5.11 & 4.02 & 10.40 & 5.20 & 11.11 & 5.92 \\
-NoMask & 5.03 & 4.11 & 10.78 & 6.22 & 12.32 & 6.03 \\
-Proposed & 4.53 & 3.67 & 9.56 & 4.89 & 10.21 & 4.84 \\ \hline
+ & Chairs & KITTI & SC occ & SC noc & SF occ & SF noc & Time (sec)\\ \hline
+Epicflow $^\dagger$ & 2.94 & 1.52 & 4.12 & 1.36 & 6.29 & 3.06 & 16\\
+Deepflow $^\dagger$ & 3.53 & 1.53 & 5.38 & 1.77 & 7.21 & 3.34 & 17\\
+FlowNetS (C+S)* & 3.04 & 5.23 & 6.96 & N.A. & 7.76 & N.A. & 0.08\\
+DSTFlow & 5.11 & 4.02 & 10.40 & 5.20 & 11.11 & 5.92 & 0.1\\
+NoMask & 5.03 & 4.11 & 10.78 & 6.22 & 12.32 & 6.03 & 0.1\\
+Proposed & 4.53 & 3.67 & 9.56 & 4.89 & 10.21 & 4.84 & 0.17\\ \hline
 \end{tabular}
 \end{table}
 
@@ -2697,7 +2755,7 @@ rf & Adaboost.M1
 \multicolumn{1}{l}{\textbf{$r_{imb}=0.025$, $d_{\mu}=4$}} &  & \multicolumn{4}{c}{} & \multicolumn{4}{c}{} \\
 \hline
 \multicolumn{1}{l}{\textbf{Original}} & 0.793 & 0.000 & 0.000 & 0.000 & 0.000 & 0.952 & 1.000 & 0.976 & 0.976 \\ 
-\multicolumn{1}{l}{\textbf{Dup}} & 0.704 & 0.000 & 0.000 & 0.000 & 0.000 & 0.952 & 1.000 & 0.976 & 0.976 \\ \hline
+\multicolumn{1}{l}{\textbf{Dup}} & 0.704 & 0.000 & 0.000 & 0.000 & 0.000 & 0.952 & 1.000 & 0.976 & 0.976 \\
 \multicolumn{1}{l}{\textbf{SMOTE}} & 0.890 & 0.778 & \textbf{0.700} & \textbf{0.737} & \textbf{0.738} & \textbf{0.985} & 0.990 & \textbf{0.988} & \textbf{0.988} \\ 
 \multicolumn{1}{l}{\textbf{B-SMOTE}} & 0.785 & 0.000 & 0.000 & 0.000 & 0.000 & 0.952 & 1.000 & 0.976 & 0.976 \\ 
 \multicolumn{1}{l}{\textbf{MWMOTE}} & 0.893 & \textbf{0.864} & 0.380 & 0.528 & 0.573 & 0.970 & \textbf{0.994} & 0.983 & 0.983 \\ 
@@ -3011,18 +3069,16 @@ Synthetic data is extensively used in computer vision area. Although the success
 Towards these problems and challenges of using synthetic data. My research has been primarily focusing on solving computer vision related classification and recognition problem using synthetic data. Ways of creating and using synthetic data have been proposed and proved to be effective in my research. To further improve the performance that could be brought by synthetic data, I study the problem of \textit{synthetic gap} and propose many ways to overcome such inherent difference between actual data and synthetic data. To sum up, my doctoral research have following primary contributions.
 
 First, in most of learning based vision research, training data is very valuable and hard to collect, which usually lead to an unsatisfactory machine learning result. Conventional data augmentation method only creates
-new data which has only small variance from existing ones. In this way, data augmentation fails to introduce many new informations about data and doesn't increase enough data coverage. Thus the performance brought by data augmentation is constraint. In my research, to better simulate actual data, a series of methods that create synthetic data are introduced. A significant problem that data argumentation does not solve and I have to figure out is what makes real data looks like real data and how to simulate unseen data using existing ones. I believe transformation in either data space or parameter space among existing data is the key to this problem. Therefore, methods with new techniques such as: data congealing, registration, parametrization
-are invented. Different from data argumentation which applies transformation based on single data only, my proposed method learns transformation among data, thus my methods are able to generate synthetic data with larger variance if projected to parameter and feature space which leads to a better simulation of unseen actual data.
+new data which has only small variance from existing ones. In this way, data augmentation fails to introduce many new informations about data and doesn't increase enough data coverage. Thus the performance brought by data augmentation is constraint. In my research, to better simulate actual data, a series of methods that create synthetic data are introduced. A significant problem that data argumentation does not solve and I have to figure out is what makes real data looks like real data and how to simulate unseen data using existing ones. I believe transformation in either data space or parameter space among existing data is the key to this problem. Therefore, methods with new techniques such as: data congealing, registration, parametrization, deep neural network based approaches
+are invented. Different from data argumentation which applies transformation based on single data only, the proposed approaches capture the general representation of existing data by either modeling templates for the data or using neural network to implicityly learn hidden representation or distribution of the data. The proposed approaches are applied to many visual recognition tasks such as digit recognition, house roof recognition from both satellite image and 3D point cloud, optical flow estimation and so on.
 
 Second, directly use synthetic data will most likely cause a failure or unsatisfactory performance in machine learning algorithm. That is mostly because the inherent difference between actual data and synthetic data created using a parametric prototype, which is defined as a \textit{synthetic gap} in my work. In my researches, I eliminate the impact of such difference in two different phases of a machine learning procedure which are in feature extraction and in learning algorithm design. In feature extraction, I designed features which are able to capture the common characteristics of both actual and synthetic data, while ignoring inherent pattern and noises of actual data. In learning algorithm design, learning algorithms are designed to be able to deal with the difference between two kinds of data. 
 
 Third, to eliminate the \textit{synthetic gap}, a general framework based on a neural network with novel architecture is proposed. The neural network is trained as a regressor to automatically find out the relationship between two types of data, thus is able to close the gap between two data. With this mechanism synthetic data could better simulate actual data and used in machine learning procedure.
 
-Fourth, create synthetic data in data space and compute sophisticated features from the data is a complicated task. Creating synthetic data in data space narrow down the range of using synthetic data in learning, not only because it requires enough pre-knowledges of problems and data, but also for most problems there is almost no way a synthetic data can be built in data space to mimic the actual ones. A better solution but much more challenging is to directly create synthetic data in feature space. Inserting new data in feature space is hard. Because data representation in feature space is abstractive that the actual data space representation of a location in feature space is unknown or hard to show. The problem I need to solve here is to figure out answers of two questions: where I are going to insert a new data and why I insert it there? In my research, I propose a general algorithm that create new synthetic data through learning the spatial relation of existing data in feature space. The algorithm first learns distribution and structure from existing data, then each new
-data is created to preserve these knowledges.
-
-
-
+Fourth, handling imbalanced datasets is a challenging problem that if not treated correctly results in reduced classification performance. Imbalanced datasets are commonly handled using minority oversampling, whereas the SMOTE algorithm is a successful oversampling algorithm with numerous extensions. SMOTE extensions do not have a theoretical guarantee during training to work better than SMOTE and in many instances their perfor- mance is data dependent. In this paper we propose a novel extension to the SMOTE algorithm with a theoretical guarantee for improved classification performance. The proposed approach considers the classification performance of both the majority and
+minority classes. In the proposed approach CGMOS (Certainty Guided Minority OverSampling) new data points are added by considering certainty changes in the dataset. The paper provides a proof that the proposed algorithm is guaranteed to work　better than SMOTE for training data. Further experimental results on 30 real-world datasets show
+that CGMOS works better than existing algorithms when using 6 different classifiers.
 \clearpage
 
 
