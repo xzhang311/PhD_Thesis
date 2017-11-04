@@ -179,17 +179,15 @@
 \prelimpages         % Settings of preliminary pages are done with \prelimpages command
 
 
-%%%%  Acknowledgement %%%
-%\begin{acknowledgement}     % acknowledgement environment, this is optional
-%\par  This dissertation could not have been written without Dr. Agam
-%who not only served as my supervisor but also encouraged and
-%challenged me throughout my academic program. Also, I would like to thank Dr. Chen who 
-%serves as a co-advisor and helps and discuss with me through out my academic program.
-%The last I want to give my special thanks to my parents, my wife and my adorable daughter who
-%never stop to support me and always encourage me and be with me even I are in the hardest time.  
-%Thank them all.\\ \\ 
-%% or \input{acknowledgement.tex} % you need a separate acknowledgement.tex file to include it.
-%\end{acknowledgement}
+%%%  Acknowledgement %%%
+\begin{acknowledgement}     % acknowledgement environment, this is optional
+\par  This dissertation could not have been written without Professor Agam
+who not only served as my supervisor but also encouraged and
+challenged me throughout my academic program. Also, I would like to thank Dr. Chen who serves as a co-advisor and helps and discuss with me throughout my educational program.
+Also, I want to give special thanks to my parents who encourage me in the very beginning to study in U.S. and always give me most considerable support both financially and mentally. The last but not the least, thanks to my wife Shanshan, my adorable daughter Dorothy and my upcoming son at the time when this acknowledgment is written who
+never stop let me feel I am loved and supported.  
+% or \input{acknowledgement.tex} % you need a separate acknowledgement.tex file to include it.
+\end{acknowledgement}
 
 
 % Table of Contents
@@ -231,13 +229,13 @@
 
 \Section{Overview} \label{sec: overview}
 
-Computer vision research focuses on methods that acquire, process, and analyze high-dimensional real world data. The ultimate goal of these methods is to recognize the objects of interest to assist decisions in a larger system. The understanding of data in computer vision research can be viewed as a process of detangling of symbolic and context information from incoming visual signals using methods and models constructed with the aid of computational methods from other disciplines, such as geometry, physics, statistics, and artificial intelligence \cite{KR:14, SL:01, MT:04, JB:00, FD:03}.
+Computer vision research focuses on methods that acquire, process, and analyze high-dimensional real world data. The ultimate goal of these methods is to recognize the objects of interest to assist decisions in a larger system. The understanding of data in computer vision research can be viewed as a process of de-tangling of symbolic and context information from incoming visual signals using methods and models constructed with the aid of computational methods from other disciplines, such as geometry, physics, statistics, and artificial intelligence \cite{KR:14, SL:01, MT:04, JB:00, FD:03}.
 
 Vision-based recognition is an exciting and challenging topic that has attracted worldwide research efforts. From most straightforward geometry pattern recognition to complex scene understanding based on statistical theory and artificial intelligence, the techniques and underlying mathematical models used in computer vision recognition are becoming more and more complicated and data consuming. In particular the blossom of deep neural network models \cite{HK:89, HG:06, LY:98, LH:09} lead to numerous applications involving computer-based recognition systems, such as face recognition, autonomous cars, gesture recognition and so on.
 
-To mine and understand the intrinsic relations and correlation of data, researchers often design high dimensional data features that can better characterize the nature of the data. Generally, due to the complexity of the models and the dimensions of the features, a considerable number of training data is required \cite{RS:91, KHM:83}. A learning process which is short of enough training data could result in many problems. One of the most well-known problems is overfitting where the resulting model correctly fits the training data but has substantial bias concerning the underlying ideal model. It has been shown that with a fixed number of design pattern samples, the accuracies of models reduces as the dimensionality increases \cite{HG:68}, a problem of which is known as the curse of dimensionality.
+To mine and understand the intrinsic relations and correlation of data, researchers often design high dimensional data features that can better characterize the nature of the data. Generally, due to the complexity of the models and the dimensions of the features, a considerable number of training data is required \cite{RS:91, KHM:83}. A learning process which is short of enough training data could result in many problems. One of the most well-known problems is overfitting where the resulting model correctly fits the training data but has substantial bias concerning the underlying ideal model. It has been shown that with a fixed number of design pattern samples, the accuracy of models reduces as the dimensionality increases \cite{HG:68}, a problem of which is known as the curse of dimensionality.
 
-Data is valuable and expensive. The process of data acquisition is costly and may require human labor and resources. For example, to collect real-world street view data for the computer vision benchmarks KITTI, an experienced car driver has to drive a standard station wagon through every street in the city which is equipped with two high-resolution cameras, a gray scale video camera, a GPS localization system, and a Velodyne laser scanner \cite{AG:12}. The cost of data acquisition could go even higher when more valuable data has to be collected. For example, in remote sensing, to have a detailed 3D mapping of a terrain of a region, an aircraft has to be used with expensive and professional remote sensing equipment. Moreover, data labeling is much more expensive than data acquisition, and sometimes impossible. For example, when a medical diagnosis has to be made by a model learned using hundreds of thousands of medical images, to guarantee the accuracy of prediction in a confidence interval that is under control, the labeling of data has to be performed by physicians. Another example in which labeling is difficult is the recognition of the point cloud objects from street view point cloud data that is collected from real-world. A snapshot of such data is shown in Figure~\ref{fig: point cloud labelling}. In this example labeling requires categorizing objects into six classes: car, pedestrian, street-light, traffic-light, tree and trash can. As can be seen in this example this is an extremely difficult task.
+Data is valuable and expensive. The process of data acquisition is costly and may require human labor and resources. For example, to collect real-world street view data for the computer vision benchmarks KITTI, an experienced car driver has to drive a standard station wagon through every street in the city which is equipped with two high-resolution cameras, a gray scale video camera, a GPS localization system, and a Velodyne laser scanner \cite{AG:12}. The cost of data acquisition could go even higher when more valuable data has to be collected. For example, in remote sensing, to have a detailed 3D mapping of a terrain of a region, an aircraft has to be used with expensive and professional remote sensing equipment. Moreover, data labeling is much more expensive than data acquisition, and sometimes impossible. For example, when a medical diagnosis has to be made by a model learned using hundreds of thousands of medical images, to guarantee the accuracy of prediction in a confidence interval that is under control, the labeling of data has to be performed by physicians. Another example in which labeling is difficult is the recognition of the point cloud objects from street view point cloud data that is collected from real-world. A snapshot of such data is shown in Figure~\ref{fig: point cloud labeling}. In this example labeling requires categorizing objects into six classes: car, pedestrian, street-light, traffic-light, tree and trash can. As can be seen in this example this is an extremely difficult task.
 
 \begin{figure}[h]
 \centerline{
@@ -245,13 +243,13 @@ Data is valuable and expensive. The process of data acquisition is costly and ma
   \resizebox{0.95\textwidth}{!}{\rotatebox{0}{
   \includegraphics{Pic/PDF/PointCloudLabelling.pdf}}}
 \end{tabular}}
-\caption{A screen-shot of street view point cloud data used in my research. There are 9195492 points that are contained in this scene.}
-\label{fig: point cloud labelling}
+\caption{A screen-shot of street view point cloud data used in my research. There are 9 million points that are contained in this scene.}
+\label{fig: point cloud labeling}
 \end{figure} 
 
 \Section{The Proposed Solution} \label{sec: solution}
 
-Data labeling is a tedious and time-consuming. It is also very expensive especially when experts are involved. To tackle this problem and to reduce the cost spent on data labeling, I propose to use synthetic data to boost the performance of vision systems. Although using synthetic data to assist recognition is not new, in this thesis I propose a systematic treatment of using syntheitc data for recognition. My approach differs from existing ones in three aspects.  
+Data labeling is a tedious and time-consuming. It is also very expensive especially when experts are involved. To tackle this problem and to reduce the cost spent on data labeling, I propose to use synthetic data to boost the performance of vision systems. Although using synthetic data to assist recognition is not new, in this thesis I propose a systematic treatment of using synthetic data for recognition. My approach differs from existing ones in three aspects.  
 
 First, most the existing approaches simulate actual data by capturing synthetic data that only captures low-level visual features of objects. Where such features may be captured quickly, it is hard to use such low-level features to create more complicated and realistic synthetic data. My approach focuses instead on learning and modeling a general model or template that could be used to represent high-level visual or geometric features of the objects. Such template not only enables more ability of simulating actual data, but also can be quickly transformed and added with more features to be more realistic and better simulate actual data. 
 
@@ -270,6 +268,7 @@ Third, existing methods do not consider the essential discrepancy between real d
 \end{figure} 
 
 \Section{Novel Contribution} \label{sec: contribution}
+
 In this thesis, I address recognition problems of 2D \& 3D visual data using learning-based methods. There are two factors determining the results of a learning process. 
 
 The first factor is the learning algorithm. A successful learning algorithm should be efficient and generalize to unseen data. The second factor is the data. Data preparation usually is a pre-processing step in machine learning and is often not given enough attention. The quantity and the quality of the data are key factors affecting the success of a learning procedure. 
@@ -278,11 +277,9 @@ It is accepted that the performance of a learning algorithm could be increased i
 
 \Subsection{Creation of Synthetic Data in Data Space} Machine learning algorithms usually suffer from lacking enough training data. In existing methods data augmentation is used to increase the amount of training data. In data augmentation, new examples are generated as perturbed versions of the original data. For example, to augment images; the original images are stretched, added noise, or partially cropped. Images generated in this way form a distribution in parameter and feature space which is centered around the original images. Thus, these new images do not introduce many new pieces of information in this case. Therefore, the learner may fail to learn a more general decision boundary from the resulting data, and the increase in performance will be limited.
 
-In my research, to better simulate actual data, a series of methods that synthesize more data are introduced. These methods can be separated into two groups. In the first group, different from existing methods, my methods of data synthesis are based on usage of a centralized representation of actual data. I call such centralized representation a prototype in this proposal because the prototype can characterize essential structures and patterns of actual data. The prototype in my work is modeled as a parametric model of control points and could be learned using semi-automatic or automatic approaches. Interpolating between existing data then randomly drawing synthetic data from a known distribution of existing data provides a general way of data synthesis. Methods in the second group are machine learning based methods. Along with the development of deep learning in computer vision, a large dataset has become a necessary factor to guarantee the desired performance of neural networks. Image level or even pixel level data synthesis is essential in these tasks. In this thesis, I propose ways that synthesize image-level data using deep neural networks. 
+In my research, to better simulate actual data, a series of methods that synthesize more data are introduced. These methods can be separated into two groups. In the first group, different from existing methods, my methods of data synthesis are based on usage of a centralized representation of actual data. I call such centralized representation a prototype in this proposal because the prototype can characterize essential structures and patterns of actual data. The prototype in my work is modeled as a parametric model of control points and could be learned using semi-automatic or automatic approaches. Interpolating between existing data then randomly drawing synthetic data from a known distribution of existing data provides a general way of data synthesis. Methods in the second group are machine learning based methods. Along with the development of deep learning in computer vision, a large dataset has become a necessary factor to guarantee the desired performance of neural networks. Image level or even pixel level data synthesis is essential in these tasks. In this thesis, I propose ways that synthesize image-level data using deep neural networks. The proposed approach was described and evaluated in \cite{Zhang2014Autoencoder}\cite{AndiZang2015}\cite{ZX:14}\cite{Ouyang:17}\cite{ZX17:OpticalFlow}
 
-The proposed approach was described and evaluated in \cite{Zhang2014Autoencoder}\cite{AndiZang2015}\cite{ZX:14}\cite{Ouyang:17}\cite{ZX17:OpticalFlow}
-
-\Subsection{Learning From Synthetic Data} Laerning from synthetic data may cause failed or degraded classification results. This is because the synthetic data is generated using a data prototype (parametric model) which is a simplified version of data representation. It is usually very difficult for a prototype to generate extra details of actual data. This results in differences between actual data and synthetic data.
+\Subsection{Learning From Synthetic Data} Learning from synthetic data may cause failed or degraded classification results. This is because the synthetic data is generated using a data prototype (parametric model) which is a simplified version of data representation. It is usually very difficult for a prototype to generate extra details of actual data. This results in differences between actual data and synthetic data.
 
 In my work, to eliminate the artifacts during learning brought by essential differences between actual and synthetic data, I design feature extraction approaches that are going to avoid or hide the inequalities between two types of data. To achieve this goal, two feature extraction strategies are proposed in my work and demonstrated to be useful. First, extracted features ignore irregular features or patterns of actual data and only capture essential characteristics shared by both actual and synthetic data. Second, instead of ignoring particular elements belonging to actual data, a post-processing stage after feature extraction compensates for extra information for synthetic data. Guided by these two strategies, I developed several techniques and algorithms. The results of the proposed feature extraction strategies could be found in \cite{Zhang2014Autoencoder}\cite{AndiZang2015}\cite{ZX:14}\cite{ZX:14b}.
 
@@ -290,7 +287,7 @@ In my work, to eliminate the artifacts during learning brought by essential diff
 
 Different from existing work, here I solve the problem from a more general perspective by eliminating the \textit{synthetic gap} using a domain adaptation approach. A general framework based on a neural network with novel architecture is proposed. The neural network is trained as a regressor which could map synthetic data to real data and find out the potential transformation between two types of data. Thus, it can close the gap between two data types. With this mechanism, synthetic data could better simulate actual data and be used in a machine learning procedure. Results of the proposed feature extraction strategies could be found in \cite{7424358}\cite{ZX17:SMAE}
 
-\Subsection{Creation of Synthetic Data in Feature Space} The qality of datasets play an important role in machine learning. Quality refers to not only the number of noisy samples contained in a dataset, but also to how samples are distributed in the dataset. In practice, many applications and machine learning models suffer from degraded performance due to either unbalanced distribution of datasets or overwhelming noisy outliers.
+\Subsection{Creation of Synthetic Data in Feature Space} The quality of datasets play an important role in machine learning. Quality refers to not only the number of noisy samples contained in a dataset, but also to how samples are distributed in the dataset. In practice, many applications and machine learning models suffer from degraded performance due to either unbalanced distribution of datasets or overwhelming noisy outliers.
 
 Data synthesis through a prototype can be used to improve the performance of many applications suffering from unbalanced data distribution and eliminate the weight brought by noise samples. However, due to the nature of the methodology, it is limited to specific problems.  A more general solution is to directly create synthetic data representation to weaken impacts of noisy samples and to achieve a balance distribution between classes in the data.
 
@@ -298,11 +295,11 @@ Synthesizing new data in feature space is hard. Because data representation in f
 
 \clearpage
 
-\Chapter{Creation of Synthetic Data in Data Space} \label{chapter: data space}
+\Chapter{Data Synthesis in Data Space} \label{chapter: data space}
 
 \Section{Introduction} \label{dataspace: introduction}
 
-It is accepted that an accurate classifier can be learned if a broad and balanced labeled training dataset is available. In real-world scenarios, people always struggle to find adequate amounts of labeled data. Even with the help of crowdsourcing, e.g., Amazon Mechanical Turk (AMT), it is often difficult to collect a lot of labeled instances with high quality that is necessary for training a classifier for a real-world problem. Regarding quantity, it has been shown that amount of available training data, per class, follows Zipf distribution \cite{torralba2011app_share}. Regarding quality, some domains, such as analysis of satellite images (e.g., the comet images from Rosetta), require extensive and detailed expert user annotation \cite{remotesensing2013}. A large volume of LiDAR point cloud data have to be labeled before they can be used to train some classifiers \cite{ZX:14}. Such labeling process usually is very time consuming and requires expert-level labeling efforts or expensive equipment. Practically only an insufficient portion of the data points can be obtained. The fundamental issue of learning from not enough data is the ability of these data to significantly deal with the performance of most standard machine learning algorithms. A most standard learning algorithm, generative and discriminative, assume that enough knowledge and features could be extracted from training data that have a balanced distribution. Therefore, when presented with a complex dataset but with less amount of data, these algorithms fail to adequately represent the statistical characteristics of the data and appropriately provide unfavorable accuracies.
+It is accepted that an accurate classifier can be learned if a broad and balanced labeled training dataset is available. In real-world scenarios, people always struggle to find adequate amounts of labeled data. Even with the help of crowd sourcing, e.g., Amazon Mechanical Turk (AMT), it is often difficult to collect a lot of labeled instances with high quality that is necessary for training a classifier for a real-world problem. Regarding quantity, it has been shown that amount of available training data, per class, follows Zipf distribution \cite{torralba2011app_share}. Regarding quality, some domains, such as analysis of satellite images (e.g., the comet images from Rosetta), require extensive and detailed expert user annotation \cite{remotesensing2013}. A large volume of LiDAR point cloud data have to be labeled before they can be used to train some classifiers \cite{ZX:14}. Such labeling process usually is very time consuming and requires expert-level labeling efforts or expensive equipment. Practically only an insufficient portion of the data points can be obtained. The fundamental issue of learning from not enough data is the ability of these data to significantly deal with the performance of most standard machine learning algorithms. A most standard learning algorithm, generative and discriminative, assume that enough knowledge and features could be extracted from training data that have a balanced distribution. Therefore, when presented with a complex dataset but with less amount of data, these algorithms fail to adequately represent the statistical characteristics of the data and appropriately provide unfavorable accuracy.
 
 Technically, there is no official definition or a quantitative measure of rare data learning. It is essential to understand the rarity of different forms. According to \cite{Weiss}, rarity could come from either relative rarity which is usually related to imbalanced learning or absolute rarity which is a direct result of the nature of the dataset. My method and solution partially overlap with imbalanced learning in cases when data is imbalanced distributed, and the minority classes are viewed as rare data. More than rare data learning, methods discussed in this chapter solve more general problems in which labeling actual data may be is very time consuming or a job must need much labor works to be done. 
 
@@ -312,7 +309,7 @@ I propose to create synthetic data and use them to solve mentioned problems in a
 
 Due to the technical constraint in the past, data synthesis is limited to just using geometrical transformation and degradation models. In \cite{VT:03}\cite{VT:04}, to help off-line recognition of handwritten text, a perturbation model combined with a morphological operation is applied to real data. They showed that when a moderate transformation is added to the real data, the resulting synthetic training set boost the performance. Synthetic data generation techniques have been moderately implemented in an area of optical character recognition. In \cite{NJ:09}, researches and experiments were conducted to test the safeness of using synthetic data in machine print text recognition problem. Following the conventional way of generating synthetic data, they model each synthetic data as a geometrically transformed version with different magnitude of the original data. They demonstrated that classifier trained on interpolated data often but not always improved classification when tested on previously unseen samples. However, the use of interpolated data in the training sets has never worsened the results. To enhance the quality of the degraded document, in \cite{BG:08} degradation models such as brightness degradation, blurring degradation, noise degradation, and texture-blending degradation were used to create a training dataset for a handwritten text recognition problem. The synthetic minority oversampling technique (SMOTE) \cite{CNV:02} and its variants \cite{HH:05}\cite{HH:08} are also powerful methods that have shown much success in various applications.  However, these previous methods are relatively limited to one particular type of dataset, while  I propose a more general  methodology of generating synthetic data by creating a parametric prototype of the data. By tuning parameters of the prototype, my method can derive synthetic data that cover almost all possibilities. A fascinating work whose intention is a bit similar to mine is proposed in \cite{Pauly:2004:UVP:2386332.2386346}. In this paper, to analyze variability in point-sampled geometry, authors first assume every data comes in with incomplete information about a ground truth object. They then capture this uncertainty by introducing a statistical representation that quantifies for each point in space the likelihood that a surface fitting the data passes through that point. This likelihood map is constructed by aggregating local linear extrapolation computed from weighted least squares fits. The quality of fit of these extrapolations is combined into a corresponding confidence map that measures the quality of local tangent estimates.
 
-In recent five years, along with the development of deep learning techniques. Research of data synthesis, particularly image synthesis, has received more and more attention. There are two reasons for this phenomenon. On the one hand, sizeable deep learning system usually need large amount data to guarantee an unbiased and high-quality model (network/networks), which makes the desire for synthetic data more imperative, on the other hand, modern deep learning techniques provide an efficient and prominent way to synthesize data. 
+In recent five years, along with the development of deep learning techniques. Research of data synthesis, particularly image synthesis, has received more and more attention. There are two reasons for this phenomenon. On the one hand, sizable deep learning system usually need large amount data to guarantee an unbiased and high-quality model (network/networks), which makes the desire for synthetic data more imperative, on the other hand, modern deep learning techniques provide an efficient and prominent way to synthesize data. 
 
 Many efforts have explored using synthetic data for various prediction tasks, including gaze estimation \cite{wood2016learning}, text detection and classification in RGB images \cite{gupta2016synthetic}, font recognition \cite{wang2015deepfont}, object detection \cite{gupta2014learning}, hand pose estimation in depth images \cite{tompson2014real}\cite{supancic2015depth}, scene recognition in RGB-D , semantic segmentation of urban scenes \cite{ros2016synthia}, and human pose estimation 
 \cite{park2015articulated}\cite{shakhnarovich2003fast}\cite{lecun2004learning}\cite{ionescu2014human3}\cite{pishchulin2012articulated}\cite{rogez2016mocap}.  Gaidon \cite{gaidon2016virtual} show that pre-training a deep neural network on synthetic data leads to improved performance.
@@ -352,11 +349,11 @@ Learning from rare data is very challenging because rare data are typically much
 
 There are two types of rarities in context, Much of the research on rarity relates to \textit{rare classes}, or more generally, class imbalance. This type of rarity requires labeled examples and is associated with classification problems. A second type of rarity concerns \textit{rare cases}. Informally, rare cases correspond to a meaningful but relatively small subset of the data, or equivalently, define a small region of the instance space. Rare cases depend only on the distribution of data and therefore are defined for both labeled and unlabeled data, for supervised and unsupervised data mining tasks. Rare cases are naturally defined by the domain and will share common characteristics. In the case of data with ground truth labels, a rare case corresponds to subconcept, or subclass, that occurs infrequently. 
 
-Some problems arise when learning from rare classes and rare cases. The first problem I could encounter is lack of data. In this case, the number of examples associated with the rare class is small in an absolute sense which makes it difficult to detect regularities within the rare classes/cases. Another problem could that could happen is generating a learning model by using an inappropriate inductive bias. Generalizing from specific examples requires an extra-evidentiary bias. Without such a bias "inductive leaps" are not possible and learning cannot occur. The bias of a data mining systems is therefore critical to its performance. One more difficulty comes with noise in training data, especially when rare classes/cases are associated with noise. Since noise data will affect the way any data mining system behaves, but what is more interesting in my research is that noise has a greater impact on rare cases that in common cases. Because rare classes have fewer examples, to begin with, it will take fewer "noisy" examples of impacting learned subconcept. In this case, the underlying model cannot distinguish between exceptional (rare) cases and noise.
+Some problems arise when learning from rare classes and rare cases. The first problem I could encounter is lack of data. In this case, the number of examples associated with the rare class is small in an absolute sense which makes it difficult to detect regularities within the rare classes/cases. Another problem could that could happen is generating a learning model by using an inappropriate inductive bias. Generalizing from specific examples requires an extra-evidential bias. Without such a bias "inductive leaps" are not possible and learning cannot occur. The bias of a data mining systems is therefore critical to its performance. One more difficulty comes with noise in training data, especially when rare classes/cases are associated with noise. Since noise data will affect the way any data mining system behaves, but what is more interesting in my research is that noise has a greater impact on rare cases that in common cases. Because rare classes have fewer examples, to begin with, it will take fewer "noisy" examples of impacting learned subconcept. In this case, the underlying model cannot distinguish between exceptional (rare) cases and noise.
 
 Among all of these challenges and difficulties, in my research, I primarily deal with supervised classification problem which may have \textit{rare classes} or \textit{rare cases} or both. By synthesize more data to create a much more balanced training set using my techniques, I demonstrate that better performance could be obtained in many classification problems.
 
-\Subsection{Satellite Image Roof Style Classification} Recognizing building roof styles is an essential step in many applications including building reconstruction and urban planning. Such problems need very high-quality training data. However, there is no previous dataset for such problem. Usually collecting data through online crowdsourcing, e.g., Amazon Mechanical Turk (AMT) is very expensive. So to facilitate the study, in my works \cite{AndiZang2015}\cite{Zhang2014Autoencoder}, a few volunteers, are invited to join the project and manually crop images from private level online digital maps. Manually cropping images is a tedious and time-consuming task. By the end of data collection, I can only crop a few thousands of roof images. 
+\Subsection{Satellite Image Roof Style Classification} Recognizing building roof styles is an essential step in many applications including building reconstruction and urban planning. Such problems need very high-quality training data. However, there is no previous dataset for such problem. Usually collecting data through online crowd sourcing, e.g., Amazon Mechanical Turk (AMT) is very expensive. So to facilitate the study, in my works \cite{AndiZang2015}\cite{Zhang2014Autoencoder}, a few volunteers, are invited to join the project and manually crop images from private level online digital maps. Manually cropping images is a tedious and time-consuming task. By the end of data collection, I can only crop a few thousands of roof images. 
 
 {\linespread{1.5}
 \begin{algorithm}[ht]   
@@ -392,9 +389,7 @@ Among all of these challenges and difficulties, in my research, I primarily deal
 
 For a large building which is usually comprised of multiple parts, I even develop an algorithm that reasonably segments large roof image to simple parts. I design an algorithm to decompose complex footprint. The basic idea of this algorithm is to segment the concave footprint into several convex polygons, while the cutting line should make the new polygons have less sum of variances of all interior angles in them. The reason I want to use convex polygon rather than concave polygon to recognize is the roof styles can be built on convex polygon much easier. 
 
-To achieve this, I assume the vertex whose interior angle is larger than π as a point of interested (POI). Then I need to traverse all possible angles from POI and find which cutting line leads the minimum variance of all interior angles in this segmentation. With calculated cutting lines and given footprint vertices, I can segment the polygon into elemental parts. The algorithm shows in Algorithm \ref{alg: 1}, Let $V$ be the set of footprint vertices, which elements have been sorted in clockwise or counterclockwise, $S$ be the set of selected segmented region vertices sets while $S$ is a queue. $C$ is the set of cutting lines. $R$ is a set of polygon vertices and $R_1$, $R_2$ are the segmented polygon vertices.
-
-The cutting line calculation follows:
+To achieve this, I assume the vertex whose interior angle is larger than π as a point of interested (POI). Then I need to traverse all possible angles from POI and find which cutting line leads the minimum variance of all interior angles in this segmentation. With calculated cutting lines and given footprint vertices, I can segment the polygon into elemental parts. The algorithm shows in Algorithm \ref{alg: 1}, Let $V$ be the set of footprint vertices, which elements have been sorted in clockwise or counterclockwise, $S$ be the set of selected segmented region vertices sets while $S$ is a queue. $C$ is the set of cutting lines. $R$ is a set of polygon vertices and $R_1$, $R_2$ are the segmented polygon vertices. The cutting line calculation follows:
 
 \begin{equation}
 \sigma(i)= \sum_{j=1}^{2} \sum_{k=1}^{\arrowvert A_jP \arrowvert} [{A_{jP(i)}(k)- \frac{(\arrowvert A_jP \arrowvert-1)\times \pi}{\arrowvert A_jP \arrowvert}} ]
@@ -413,9 +408,7 @@ Where $i$ is a given cutting line, $P(i)$ is the set polygons which generated by
         \label{fig: roofsegment}
 \end{figure} 
 
-A detailed example is shown in Figure \ref{fig: roofsegment}, with input footprint vertices $V$. The first loop in algorithm can figure out $\{V_2, C_1\}$, $\{V_2, C_2\}$, $\{V_5, C_3\}$ and $\{V_5, C_4\}$ are cutting lines. The first cut to $V$ by $\{V_2, C_1\}$ will get $\{V_2, V_3, V_4, V_5\}$ and $\{V_1, C_1, V_5, V_6, V_7, V_8\}$ these two polygons. Iterate all cutting lines until I get six segmented polygons. 
-
-An example of roof segmentation using the proposed approach is given in Figure \ref{fig: segmentationexample} in which a building roof is divided into seven pieces.
+A detailed example is shown in Figure \ref{fig: roofsegment}, with input footprint vertices $V$. The first loop in algorithm can figure out $\{V_2, C_1\}$, $\{V_2, C_2\}$, $\{V_5, C_3\}$ and $\{V_5, C_4\}$ are cutting lines. The first cut to $V$ by $\{V_2, C_1\}$ will get $\{V_2, V_3, V_4, V_5\}$ and $\{V_1, C_1, V_5, V_6, V_7, V_8\}$ these two polygons. Iterate all cutting lines until I get six segmented polygons. An example of roof segmentation using the proposed approach is given in Figure \ref{fig: segmentationexample} in which a building roof is divided into seven pieces.
 
 \begin{figure}[htb]
     \centerline{
@@ -465,9 +458,7 @@ Pyramid  & 133  & 199  & 332 \tabularnewline
 \end{table}
 
 Classification of the roof styles in the experiments is based on recognizing edges detected from the roof images. I employed the adaptive Otsu edge detection method \cite{otsu:79} to extract edges from the roof images. Examples of generated edge images are shown in \ref{fig: roof edge demonstration}
-(a). The synthetic prototypes are then created to characterize primary structures of a roof represented by extracted edges. The way I create synthetic models is to simplify and convert roof edge images to a parametric model in which edges are connected by a few control points. By adjusting the position of the control points and drawing lines between the points, I can simulate different variations of roof edge images. All noises and line patterns introduced by actual roof edge images are ignored in synthetic images, which makes it easier to create synthetic images. However, without presenting these noises and patterns in synthetic images potentially increase the distance between actual data and synthetic data, thus lower the accuracy of a classifier trained using synthetic data. I will talk about techniques and algorithms dealing with these issues in Chapter \ref{chapter: learning from synthetic data} and Chapter \ref{chapter: synthetic gap} 
-
-For all kinds of roof styles except flat I classified in my work, I intuitively design the parametric models of these roof edge images as the ones shown in Figure \ref{fig: controlpoints}.
+(a). The synthetic prototypes are then created to characterize primary structures of a roof represented by extracted edges. The way I create synthetic models is to simplify and convert roof edge images to a parametric model in which edges are connected by a few control points. By adjusting the position of the control points and drawing lines between the points, I can simulate different variations of roof edge images. All noises and line patterns introduced by actual roof edge images are ignored in synthetic images, which makes it easier to create synthetic images. However, without presenting these noises and patterns in synthetic images potentially increase the distance between actual data and synthetic data, thus lower the accuracy of a classifier trained using synthetic data. For all kinds of roof styles except flat I classified in my work, I intuitively design the parametric models of these roof edge images as the ones shown in Figure \ref{fig: controlpoints}.
 
 \begin{figure}[h]
     \centerline{
@@ -790,51 +781,19 @@ Given a $k$ words sentence $s$, I first map each word to a 400 dimension feature
 \centerline{
 \begin{tabular}{cc}
   \resizebox{0.4\textwidth}{!}{\rotatebox{0}{
-  \includegraphics{Pic/PDF/Txt2Img/482.pdf}}}
+  \includegraphics{Pic/PDF/Txt2Img/259_1.pdf}}}
   &
   \resizebox{0.4\textwidth}{!}{\rotatebox{0}{
-  \includegraphics{Pic/PDF/Txt2Img/794.pdf}}}
+  \includegraphics{Pic/PDF/Txt2Img/259_15.pdf}}}
   \\
-  \begin{tabular}{c}This flower is yellow in color, \\with petals that are skinny and long.
+  \begin{tabular}{c} This flower has one large purple \\
+                     and white petal with one yellow \\
+                     orange receptacle.
   \end{tabular}
   &
-  \begin{tabular}{c}This flower is yellow and white \\in color, with petals that are oval.
-  \end{tabular}
-  \\	
-  \resizebox{0.4\textwidth}{!}{\rotatebox{0}{
-  \includegraphics{Pic/PDF/Txt2Img/896.pdf}}}
-  &
-  \resizebox{0.4\textwidth}{!}{\rotatebox{0}{
-  \includegraphics{Pic/PDF/Txt2Img/899.pdf}}}
-  \\
-  \begin{tabular}{c}The flower has petals that are \\thin and yellow, with yellow stamen.
-  \end{tabular}
-  &
-  \begin{tabular}{c}This flower has broad, dark yellow \\petals and matching yellow stamen.
-  \end{tabular}
-  \\
-  \resizebox{0.4\textwidth}{!}{\rotatebox{0}{
-  \includegraphics{Pic/PDF/Txt2Img/915.pdf}}}
-  &
-  \resizebox{0.4\textwidth}{!}{\rotatebox{0}{
-  \includegraphics{Pic/PDF/Txt2Img/958.pdf}}}
-  \\
-  \begin{tabular}{c}This is a flower that has \\four yellow round petals.
-  \end{tabular}
-  &
-  \begin{tabular}{c}This flower is yellow in color, \\with petals that are ruffled.
-  \end{tabular}
-  \\
-  \resizebox{0.4\textwidth}{!}{\rotatebox{0}{
-  \includegraphics{Pic/PDF/Txt2Img/7.pdf}}}
-  &
-  \resizebox{0.4\textwidth}{!}{\rotatebox{0}{
-  \includegraphics{Pic/PDF/Txt2Img/300.pdf}}}
-  \\
-  \begin{tabular}{c}This flower has petals that are \\purple with yellow centers and white stamen.
-  \end{tabular}
-  &
-  \begin{tabular}{c}Scalloped multi-layered pink and yellow \\petals surrounding a yellow pistil.
+  \begin{tabular}{c} This flower has flat long and skinny \\
+  					  yellow petals in one slightly upturned \\
+  					  ring configuration.
   \end{tabular}
   \\
 \end{tabular}}
@@ -858,7 +817,8 @@ In total, the flower dataset contains 8,189 images. The dataset is divided into 
 The proposed neural network is trained 600 epochs. Trained network is applied on validation set described validation set. Examples of synthesized images and associated text descriptions are shown in Figure \ref{fig: txt2img results}.   
 
 \Section{Creating Synthetic Data to Avoid Manual Labelling} 
-One of the requirements for a successful machine learning algorithm is sufficient labeled data with high quality. Such dataset usually requires a long time and a lot of labor work to be done, which maks the labeling work very expensive and time-consuming. 
+
+One of the requirements for a successful machine learning algorithm is sufficient labeled data with high quality. Such dataset usually requires a long time and a lot of labor work to be done, which makes the labeling work very expensive and time-consuming. 
 
 \begin{figure}[th]
 \centerline{
@@ -923,7 +883,7 @@ This was done from different aspects in \cite{ZX:14}. First, features in this wo
 
 Spatial features take into account the neighborhood of each point. So the spatial features are powerful to describe geometry characteristics in the point's neighborhood and so assist in producing a distinct characterization of it. Let $p_i$ be a key point. Let $N_i$ be a neighborhood of the point, containing neighbors in a radius of $\mu$ (0.6 meters in my experiments). I denote the spatial features at $p_i$ using $\mathcal{S}_i$.
 
-\noindent \textbf{i.\;Eigen Features (EF).} I compute the eigenvalues: $\lambda_1, \lambda_2, \lambda_3$ of the covariance matrix of neighbors $N_i$ centred at $p_i$. I then add following features for $p_i$: $\lambda_1$, $\lambda_2$, $\lambda_3$, $\lambda_3-\lambda_2$, $\lambda_2-\lambda_1$, $\lambda_1/(\lambda_1+\lambda_2+\lambda_3)$, $\lambda_2/(\lambda_1+\lambda_2+\lambda_3)$, $\lambda_3/(\lambda_1+\lambda_2+\lambda_3)$, yielding 8 features in total. These features capture the non-planarity of points around $p_i$.
+\noindent \textbf{i.\;Eigen Features (EF).} I compute the eigenvalues: $\lambda_1, \lambda_2, \lambda_3$ of the covariance matrix of neighbors $N_i$ centered at $p_i$. I then add following features for $p_i$: $\lambda_1$, $\lambda_2$, $\lambda_3$, $\lambda_3-\lambda_2$, $\lambda_2-\lambda_1$, $\lambda_1/(\lambda_1+\lambda_2+\lambda_3)$, $\lambda_2/(\lambda_1+\lambda_2+\lambda_3)$, $\lambda_3/(\lambda_1+\lambda_2+\lambda_3)$, yielding 8 features in total. These features capture the non-planarity of points around $p_i$.
 
 \begin{figure}[h]
 \centerline{
@@ -992,7 +952,7 @@ To model bumpiness, I assume entire data collection process is a stochastic proc
 \end{equation}
 where $\Phi(\cdot)$ is a weighting function that $\sum_{p_j\in N_i} \Phi(\|p_i-p_j\|)=1$, and $D_{F(p_j)}(p_i)$ represents the vertical distance from $p_i$ to a plane fitted locally at $p_j$.
 
-To model the relationship between point offset and its slope, the slope of local surface is computed as the dihedral angle between point normal and horizon. Given the maximum and minimum of the slope of all points, a histogram $H_{s}=\{h_i\}_{min(\uExp(D(p_i))}^{max(\uExp(D(p_i))}$ is built, Suppose $k$ is the number of bins in the $H_{s}$ and I use $H_s(i), 1\leq i\leq k$ to denote the centring value of point slopes in each bin. Later, $H_{s}$ is voted using $\uExp(D(p_i))$. Then variance $\uVar(h_s(i))$ is computed for distances within each bin $h_s(i)$. Therefore, I could have k tuples of $(H_s{i}, \uVar(h_s(i)))_{i=1}^k$ for which I assume a polynomial relationship exists. Thus, a polynomial modal can be fitted to the tuples. An example of polynomial model with degree 2 is shown in Figure \ref{fig: BumpinessFlatness}.
+To model the relationship between point offset and its slope, the slope of local surface is computed as the dihedral angle between point normal and horizon. Given the maximum and minimum of the slope of all points, a histogram $H_{s}=\{h_i\}_{min(\uExp(D(p_i))}^{max(\uExp(D(p_i))}$ is built, Suppose $k$ is the number of bins in the $H_{s}$ and I use $H_s(i), 1\leq i\leq k$ to denote the centering value of point slopes in each bin. Later, $H_{s}$ is voted using $\uExp(D(p_i))$. Then variance $\uVar(h_s(i))$ is computed for distances within each bin $h_s(i)$. Therefore, I could have k tuples of $(H_s{i}, \uVar(h_s(i)))_{i=1}^k$ for which I assume a polynomial relationship exists. Thus, a polynomial modal can be fitted to the tuples. An example of polynomial model with degree 2 is shown in Figure \ref{fig: BumpinessFlatness}.
 
 \begin{figure}[h]
 \centerline{
@@ -1213,7 +1173,7 @@ As can be observed, the proposed approach achieves stable performance on most of
 \label{fig: Increasing Training Set}
 \end{figure} 
 
-\Subsection{Unsupervisly Learning of Optical Flow} Optical flow is a classic problem in computer vision, successfully predict of which will extensively help tasks such as object detection, object tracking and so on. Despite the abundant literature on the topic it is still challenging. Many approaches solving the optical flow problem are based on a variational method which formulated as an energy minimization problem. This paradigm relies on the photometric consistency of color and gradient, as well as the spatial smoothness of natural images. While being attractive, such methods can get stuck in local minima with error accumulation across scales and tend to fail against large displacements. 
+\Subsection{Unsupervisly Learning of Optical Flow} Optical flow is a classic problem in computer vision, successfully predict of which will extensively help tasks such as object detection, object tracking and so on. Despite the abundant literature on the topic it is still challenging. Many approaches solving the optical flow problem are based on a variational method which formulated as an energy minimization problem. This paradigm relies on the photometric consistency of color and gradient, as well as the spatial smoothness of natural images. While being attractive, such methods can get stuck in local minimum with error accumulation across scales and tend to fail against large displacements. 
 
 \begin{figure}[htbp!]
 \centerline{
@@ -1301,7 +1261,7 @@ Spatial transform network \cite{NIPS2015_5854} implement a bilinear sampling whe
 \begin{equation}
 E = \sum_{\xi = 1}^4(T(I_1, \bold{u}_{\xi}, \bold{v}_{\xi})-I_0(i, j))^2 + \lambda\cdot\varphi(\bold(u)_{\xi}, \bold(u)_{\xi})
 \end{equation}
-where $T$ represents transformation function. A smoothness constraint $\varphi(\bold{u}_{\xi}, \bold{v}_{\xi})$ is added to objective. Followingthe traditional regularization term used to constraint deformation field \cite{rohlfing2003volume}\cite{ashburner1999nonlinear}, the regularization term is defined as a bendijng energe of the deformation field which is:
+where $T$ represents transformation function. A smoothness constraint $\varphi(\bold{u}_{\xi}, \bold{v}_{\xi})$ is added to objective. Following the traditional regularization term used to constraint deformation field \cite{rohlfing2003volume}\cite{ashburner1999nonlinear}, the regularization term is defined as a bending energy of the deformation field which is:
 \begin{align*}
 \varphi(\bold(u)_{\xi}, \bold(u)_{\xi}) = & \sum ((\frac{\partial^2\bold{u}}{\partial \bold{x}^2})^2+(\frac{\partial^2\bold{u}}{\partial \bold{y}^2})^2+2(\frac{\partial^2\bold{u}}{\partial x \partial y})^2) + \\ 
 & \sum ((\frac{\partial^2\bold{v}}{\partial \bold{x}^2})^2+(\frac{\partial^2\bold{v}}{\partial \bold{y}^2})^2+2(\frac{\partial^2\bold{v}}{\partial x \partial y})^2)
@@ -1324,15 +1284,15 @@ The proposed approach is evaluated on two public datasets for optical flow.
 
 \noindent \textbf{MPI-Sintel}: This dataset \cite{Butler:ECCV:2012} is obtained from an animated movie which pays particular attention to realistic image effects. The dataset provides naturalistic video sequences that are challenging for current methods. It is designed to encourage research on long-range motion, motion blur, multi-frame analysis, non-rigid motion. Following the same training pattern used by existing works, I use both the "clean" and "final" version images to train the model.
 
-\noindent \textbf{Flying Chairs}: The dataset \cite{DFIB15} is a recently released synthetic benchmark which consists of segmented background images from Flickr on which the random images of 3D chairs are overlayed. For training, as the same with \cite{DFIB15} I split the dataset into 22232 samples for training and 640 samples for testing, respectively.
+\noindent \textbf{Flying Chairs}: The dataset \cite{DFIB15} is a recently released synthetic benchmark which consists of segmented background images from Flickr on which the random images of 3D chairs are overlaid. For training, as the same with \cite{DFIB15} I split the dataset into 22232 samples for training and 640 samples for testing, respectively.
 
 \noindent \textbf{KITTI2012}: The KITTI dataset \cite{Geiger2012CVPR} contains photos shot in city streets from a driving car. It offers higher challenges regarding with large displacements, different materials, a large variety of lighting conditions. KITTI2015 consists of 194 training pairs and 195 test pairs. The training set is used for cross-validation and to monitor the learning progress. For training, I use raw KITTI data from the city, residential and road classes, where ground truth flow is unavailable. The raw data is comprised of 82,958 image pairs. 
 
-I compare the state of the art methods including EpicFlow \cite{revaud2015epicflow}, DeepFlow \cite{weinzaepfel2013deepflow}, FlowNet \cite{reed2016generative}, DSTFlow \cite{ren2017unsupervised}. For the supervised learning method FlowNet, I term it as FlowNet (C+S) which is trained on 'Chairs' dataset and further finetuned on 'Sintel' dataset. To highlight the effectiveness of introducing mask mechanism in this work, I create another network which is similar to the one shown in Figure \ref{fig: optical flow net struct} but with mask module remove. I term the resulting network structure as "mask" in my comparison.
+I compare the state of the art methods including EpicFlow \cite{revaud2015epicflow}, DeepFlow \cite{weinzaepfel2013deepflow}, FlowNet \cite{reed2016generative}, DSTFlow \cite{ren2017unsupervised}. For the supervised learning method FlowNet, I term it as FlowNet (C+S) which is trained on 'Chairs' dataset and further fine-tuned on 'Sintel' dataset. To highlight the effectiveness of introducing mask mechanism in this work, I create another network which is similar to the one shown in Figure \ref{fig: optical flow net struct} but with mask module remove. I term the resulting network structure as "mask" in my comparison.
 
 \begin{table}[]
 \centering
-\caption{Average endpoint errors (EPE) over occluded (OCC) and non-occluded areas (NOC) of our networks compard to peer methods and the proposed method on different datasets. }
+\caption{Average endpoint errors (EPE) over occluded (OCC) and non-occluded areas (NOC) of our networks compared to peer methods and the proposed method on different datasets. }
 \label{tab: optical flow comparison}
 \begin{tabular}{lccccccc}
 \hline
@@ -1490,12 +1450,12 @@ To compare, seven groups of experiments are designed. The details and configurat
 \begin{tabular}{lccc}
 \hline\hline
 \multicolumn{1}{c}{} & \multicolumn{1}{c}{Train} & Fine Tune & Test \\ \hline
-Exp. 1 (sup) & KITTI w. labels & N.A. & KITTI test set \\ 
-Exp. 2 (sup) & Chairs w. labels & KITTI w. labels & KITTI test set \\ 
-Exp. 3 (sup) & \begin{tabular}[c]{@{}l@{}}Chairs w. labels + \\ KITTI w. labels\end{tabular} & N.A. & KITTI test set \\ 
-Exp. 4 (unsup) & KITTI raw w/o. labels & N.A. & KITTI test set \\ 
-Exp. 5 (sup) & \begin{tabular}[c]{@{}l@{}}Chairs w. labels + \\ KITTI w. predicted labels\end{tabular} & N.A. & KITTI test set \\ 
-Exp. 6 (sup) & \begin{tabular}[c]{@{}l@{}}Chairs w. labels +\\ KITTI w. predicted labels\end{tabular} & KITTI w. labels & KITTI test set \\ 
+Exp. 1 (sup) & KITTI w. labels & N.A. & KITTI test set \\ \hline
+Exp. 2 (sup) & Chairs w. labels & KITTI w. labels & KITTI test set \\ \hline
+Exp. 3 (sup) & \begin{tabular}[c]{@{}l@{}}Chairs w. labels + \\ KITTI w. labels\end{tabular} & N.A. & KITTI test set \\ \hline
+Exp. 4 (unsup) & KITTI raw w/o. labels & N.A. & KITTI test set \\ \hline
+Exp. 5 (sup) & \begin{tabular}[c]{@{}l@{}}Chairs w. labels + \\ KITTI w. predicted labels\end{tabular} & N.A. & KITTI test set \\ \hline
+Exp. 6 (sup) & \begin{tabular}[c]{@{}l@{}}Chairs w. labels +\\ KITTI w. predicted labels\end{tabular} & KITTI w. labels & KITTI test set \\ \hline
 Exp. 7 (sup) & \begin{tabular}[c]{@{}l@{}}Chair w. labels +\\ KITTI w. predicted labels +\\ KITTI w. labels\end{tabular} & N.A. & KITTI test set \\ \hline 
 \end{tabular}
 \end{table}
@@ -1520,7 +1480,7 @@ Exp. 7 & 2.31 \\ \hline
 \end{tabular}
 \end{table}
 
-Experiments results are shown in Figure \ref{tab: optical flow experiments train using predicted flows}. From the figure, the result of experiment 4 overperforms results of experiment 1, 2 and 3. In experiment 1, 2 and 3, ground truth optical flow from only 194 KITTI image pairs are supervised trained. Even mixed with Chairs data, the result is still overwhelmed by the result from experiment 4 whose network is unsupervised trained using the proposed approach. This comparison again validates the effectiveness of the proposed approach. Much better results are obtained in experiments 5, 6 and 7. All three experiments used predicted KITTI optical flow in their training phase. This shows two things: first, predicted optical flow using the proposed approach is of high quality and precision which is also validated by experiment 4, second, when mixed predicted KITTI flows with ground truth optical flow from Chair dataset, the training process can learn a better generalization from two different datasets so as to gain an improvement. 
+Experiments results are shown in Figure \ref{tab: optical flow experiments train using predicted flows}. From the figure, the result of experiment 4 over-performs results of experiment 1, 2 and 3. In experiment 1, 2 and 3, ground truth optical flow from only 194 KITTI image pairs are supervised trained. Even mixed with Chairs data, the result is still overwhelmed by the result from experiment 4 whose network is unsupervised trained using the proposed approach. This comparison again validates the effectiveness of the proposed approach. Much better results are obtained in experiments 5, 6 and 7. All three experiments used predicted KITTI optical flow in their training phase. This shows two things: first, predicted optical flow using the proposed approach is of high quality and precision which is also validated by experiment 4, second, when mixed predicted KITTI flows with ground truth optical flow from Chair dataset, the training process can learn a better generalization from two different datasets so as to gain an improvement. 
 
 In summary. The predicted optical flows produced by the proposed approach although themselves are not a perfect prediction of truth motion in images. Such data can be supervised well trained when mixed with other data containing ground truth labels. Such conclusion not only demonstrates the value of the proposed approach in estimation of optical flow but again from a new application area it proves the main idea of using synthetic data can help computer vision tasks.  
 
@@ -1540,7 +1500,7 @@ Learning a classifier from synthetic data is unfortunately extremely challenging
 & 
 \includegraphics[scale=0.49]{Pic/PDF/Autoencoder/tsne_visualization/Reconst2-crop}\tabularnewline
 (a) & (b)\tabularnewline
-\end{tabular}\protect\caption{t-SNE visulization of synthetic gap using the data from SRC dataset. (a) synthetic gap of real and
+\end{tabular}\protect\caption{t-SNE visualization of synthetic gap using the data from SRC dataset. (a) synthetic gap of real and
 synthetic data; (b) MCAE bridges the synthetic gap.}
 \label{fig: tsne_vis} 
 \end{figure}
@@ -1577,6 +1537,9 @@ Transfer Learning aims to extract the knowledge from one or more source tasks an
 in the transductive transfer learning. Nonetheless, different from previous domain adaptation tasks of different source and target domains, the synthetic gap is caused by the shifted feature distribution of synthetic data from real data. To solve this problem, my MCAE is developed from the idea of autoencoder.
 
 \Section{Learning features from synthetic data}
+
+In this section, I will introduce feature extraction techniques that used in my work to eliminate the difference between synthetic data and actual data.
+
 \Subsection{Roof Style Classification} In my work \cite{AndiZang2015}, my goal is to classify actual satellite roof edge images using synthetic edge images I created in Chapter \ref{chapter: data space}. The synthetic data is created as connected line segments on an image to represent main roof structures such as ridge and valleys. In actual roof edge images, due to low image quality in source images and noises coming from for example shadows, occlusions and small objects on roofs, the edges representing main roof structures are composed of intermittent short segments and a lot of random size circles. Due to these defect, traditional image features such as Histogram of Gradient (HOG), Local Binary Pattern (LBP) do not work very well on minimizing the difference between actual data and synthetic data.
 
 To facilitate a better learning from synthetic satellite roof edge images, I propose a new image feature called Histogram of Oriented Rays (HOR). HOR works by tracing the longest continuous ray in each direction centered at each pixel. A few parameters are set to enable HOR to be tolerant to small gaps along the ray and a small range of perturbation of the pixels on the ray. Similar to HOG feature, HOR uses a histogram to save information from all orientations around a pixel, shown in Figure \ref{fig: HOR}. The exact algorithm of HOR is given in Algorithm 
@@ -1697,7 +1660,7 @@ dataset and synthetic models. The accuracies are presented in Table \ref{table: 
 
 There is no roof labeled as half hip in the subset we evaluate of my sponsor's dataset. The only one I obtain is in Figure 1, where captured in Stanford campus. I cannot say the accuracy for half hip style is 100\% based on this ideal same. The final accuracy of a roof in complex footprint recognition is 95.2\%, 84.6\% and 91.7\% for flat, hip and gable styles.
 
-\Subsection{Satellite Building Image Retrieval} An extension of classic chamfer matching algorithm is proposed in my another work \cite{ZX14}. In this work, I deal with an image retrieval problem for edge images extracted from building roof top. Different from roof top images I used in other works, roof top images in \cite{ZX14} are extracted from artificial building footprint. Thus, the edge images contain only boundaries of a roof. An example of target roof image and synthetic roof image is given in \ref{fig: realandsynthetic}.
+\Subsection{Satellite Building Image Retrieval} An extension of classic chamfer matching algorithm is proposed in my another work \cite{ZX14}. In this work, I deal with an image retrieval problem for edge images extracted from building roof top. Different from roof top images I used in other works, roof top images in \cite{ZX14} are extracted from artificial building footprint. Thus, the edge images contain only boundaries of a roof. 
 
 The task in this work is to retrieve the most matching actual roof edge image given a synthetic roof edge image. Challenges come from different aspects. First, actual edge image is generated by extracting edges from satellite images. Thus edge images could contain a great number of edges from other unrelated objects in an image. Also, due to lighting condition, buildings in an image could either be too dim or shadowed by dark areas. Second, synthetic edge image are polygons representing the boundary of a building. These polygons give a very approximate shape about an actual building. Thus, the polygon could be very different from the actual building rooftop.
 
@@ -1778,7 +1741,7 @@ A squared Euclidean norm is used in the first term of Equation (\ref{Equ: distan
 \label{fig: modified distance.}
 \end{figure} 
 
-Given the transformed template edge pixels $\{v_i^{\scalebox{.5}{\textit{U}}}\}_{i=1}^n$, I find for each pixel $v_i^{\scalebox{.5}{\textit{U}}}$ matching scores for the $p$ closest transformed template edge pixels. To estimate contextual matching error of $d(v_i^{\scalebox{.5}{\textit{U}}}, u_j)$ at location $v_i^{\scalebox{.5}{\textit{U}}}$, the $q$ pixels with lowest matching error, where $q<p$, are selected. I denoted these $q$ pixels as $\{v_k^{\scalebox{.5}{\textit{U}}}\}_{k=1}^q$. I then calculate the variance of the distance $d(v_i^{\scalebox{.5}{\textit{U}}}, u_j)$ of the $q$ selected pixels:$\varphi(v_i^{\scalebox{.5}{\textit{U}}})=\frac{1}{q}\sum_{k=1}^q (d(v_k^{\scalebox{.5}{\textit{U}}}, u_j)-\bar{d})^2$, where $\bar{d}$ is the average matching error of the $q$ neighbors.
+Given the transformed template edge pixels $\{v_i^{\scalebox{.5}{\textit{U}}}\}_{i=1}^n$, I find for each pixel $v_i^{\scalebox{.5}{\textit{U}}}$ matching scores for the $p$ closest transformed template edge pixels. To estimate contextual matching error of $d(v_i^{\scalebox{.5}{\textit{U}}}, u_j)$ at location $v_i^{\scalebox{.5}{\textit{U}}}$, the $q$ pixels with lowest matching error, where $q<p$, are selected. I denoted these $q$ pixels as $\{v_k^{\scalebox{.5}{\textit{U}}}\}_{k=1}^q$. I then calculate the variance of the distance $d(v_i^{\scalebox{.5}{\textit{U}}}, u_j)$ of the $q$ selected pixels: $\varphi(v_i^{\scalebox{.5}{\textit{U}}})=\frac{1}{q}\sum_{k=1}^q (d(v_k^{\scalebox{.5}{\textit{U}}}, u_j)-\bar{d})^2$, where $\bar{d}$ is the average matching error of the $q$ neighbors.
 
 The distance variance $\varphi(v_i^{\scalebox{.5}{\textit{U}}})$ provides a more stable assessment of the matching result at $v_i$. The parameters $p$ and $q$ control the size of the contextual information used in the computation. A larger $p$ leads to more contextual information included while $q$ helps in excluding outliers. In my experiments, I set $p=13$ and $q=5$. Since $p$ and $q$ are constants, the asymptotic time complexity of the algorithm is not affected by them. From a practical point of view, to save time when searching for the $p$ closest neighbors at each $v_i$, I generate and maintain a list of $p$ closest neighbors for each $v_i$ before the matching begins. 
 
@@ -1879,7 +1842,7 @@ I tested the proposed approach on two datasets, where each contains 1000 buildin
 \label{fig: incomplete building results}
 \end{figure} 
 
-The four parameters in Algorithm \ref{alg:D} are set as follows: $\theta=50\%$, $t_s=5$, $t_{\alpha}=15$, and $t_{\varphi}=0.8$. By setting these parameters, I allow for at least $50\%$ of template pixels to be inliers in the computation of $D(U, V;R, T)$; the accepted matching error of obtained transformation has to be within error of $5$ pixels in terms of spatial distance and $15$ degrees in terms of orientation difference; finally $0.8$ average distance variance is used to rule out outliers during Chamfer matching.
+%The four parameters in Algorithm \ref{alg:D} are set as follows: $\theta=50\%$, $t_s=5$, $t_{\alpha}=15$, and $t_{\varphi}=0.8$. By setting these parameters, I allow for at least $50\%$ of template pixels to be inliers in the computation of $D(U, V;R, T)$; the accepted matching error of obtained transformation has to be within error of $5$ pixels in terms of spatial distance and $15$ degrees in terms of orientation difference; finally $0.8$ average distance variance is used to rule out outliers during Chamfer matching.
 
 In my experiments, I test the accuracy of my algorithm in estimating the optimal transformation during alignment. I manually labeled the ground truth locations of the building roofs in satellite images. The accuracy of the result is measured by the ratio of overlap between the bounding box of the ground truth roof mask and the one transformed by the proposed algorithm. Note that simply measuring the Root Mean Square error (RMS) between the aligned targets and templates is not accurate as it is sensitive to broken edges and incorrect alignments.
 
@@ -2274,7 +2237,7 @@ and the synthetic data. The results are shown in Fig.~\ref{fig:t-SNE-visualizati
 
 \clearpage
 
-\Chapter{Creation of Synthetic Data in Feature Space} \label{chapter: feature space}
+\Chapter{Data Synthesis in Feature Space} \label{chapter: feature space}
 
 \Section{Introduction}
 
@@ -2396,7 +2359,7 @@ To show the certainty changes induced by adding samples at different locations o
 
 Several existing approaches claim handling imbalanced learning better than SMOTE. Such claims are typically validated using empirical tests without a theoretical guarantee and in some instances may not extend to new datasets. In this section, I provide a theoretical guarantee showing that CGMOS is expected to work better than SMOTE in training process.
 
-Let $D=\{(x_j, y_j)\}_{j=1}^n$ be a training dataset. Let $W(D)=\{W(x_i)\}_{i=1}^n$ be the sample weights computed using Eqn. \ref{eqn: weight}. 
+Let $D=\{(x_j, y_j)\}_{j=1}^n$ be a training dataset. Let $W(D)=\{W(x_i)\}_{i=1}^n$ be the sample weights computed using Eq. \ref{eqn: weight}. 
 \newline
 \newline
 \textbf{Lemma 1.} \textit{Given a set of weights $\{W(x_i)\}_{i=1}^n$ as defined above and a normalization factor $z$ given by $z=\sum_{i=1}^n W(x_i)$, it must be that $\sum_{i=1}^n W(x_i)^2 \geq \frac{z^2}{n}$.}
@@ -2416,12 +2379,12 @@ r_{+i}(y_j\mid x_j) \equiv P(y_j\mid x_j ; \theta') / P(y_j\mid x_j; \theta).
 r_{+i}(y_j\mid x_j)=1+R_{+i}(y_j\mid x_j).
 \end{equation}
 
-\noindent\textbf{Proof} According to the definition of the certainty, I have $C_{+i}(y_j\mid x_j)=P(y_j\mid x_j; \theta')$ and $C(y_j\mid x_j; \theta)=P(y_j\mid x_j; \theta)$. Then $P(y_j\mid x_j; \theta')=r_{+i}(y_j\mid x_j) P(y_j\mid x_j; \theta)$ according to the definition of likelihood ratio. Given Eqn. \ref{eqn: relative diff}, I have that $R_{+i}(y_j\mid x_j)=\frac{r_{+i}(y_j\mid x_j) P(y_j \mid x_j; \theta) - P(y_j \mid x_j; \theta)}{P(y_j \mid x_j; \theta)}$.  By simplifying this equation, I thus have 
+\noindent\textbf{Proof} According to the definition of the certainty, I have $C_{+i}(y_j\mid x_j)=P(y_j\mid x_j; \theta')$ and $C(y_j\mid x_j; \theta)=P(y_j\mid x_j; \theta)$. Then $P(y_j\mid x_j; \theta')=r_{+i}(y_j\mid x_j) P(y_j\mid x_j; \theta)$ according to the definition of likelihood ratio. Given Eq. \ref{eqn: relative diff}, I have that $R_{+i}(y_j\mid x_j)=\frac{r_{+i}(y_j\mid x_j) P(y_j \mid x_j; \theta) - P(y_j \mid x_j; \theta)}{P(y_j \mid x_j; \theta)}$.  By simplifying this equation, I thus have 
 \begin{equation}
 r_{+i}(y_j\mid x_j)=1+R_{+i}(y_j\mid x_j). \;\;\;\blacksquare
 \end{equation}
 
-The addition likelihood ratio defined in Eqn. \ref{eqn. likelihoodratio} measures the gain in adding a new point, where higher gains are desired. Note that while the gain usually is close to 1, it may be bigger or smaller than 1.
+The addition likelihood ratio defined in Eq. \ref{eqn. likelihoodratio} measures the gain in adding a new point, where higher gains are desired. Note that while the gain usually is close to 1, it may be bigger or smaller than 1.
 
 \noindent\textbf{Definition 4. (Average gain)} The average gain when adding sample $x_i$ is defined by:
 \begin{equation}
@@ -2845,9 +2808,10 @@ Although, both $\fscore$ and $\gscore$ are great evaluation metrics, they are st
 A ROC graph primarily manifest its usefulness by showing a relative trade-off between benefit (true positive) and cost (false positive). One attractive property makes ROC graph a useful metric in imbalanced learning lies in the facts that ROC curve is insensitive to changes in class distribution. Because of this property, it is easier to see the performances of models trained by dataset oversampled by different algorithms. The goal in ROC space is to let curves be as close to the upper-left-hand corner as possible, in which case the ratio between benefit and cost is maximized. To compare all test results more straightforwardly, I also compute the area under a ROC curve (AUC) which reduce the ROC performance to a single scalar value representing the expected performance of the ROC curve.
  
 \Section{Results}
+
 I provide an evaluation of proposed CGMOS in this section. The evaluation is done on both artificial and real-world datasets.
 
-\Subsubsection{Experiments on Artificial Datasets}
+\Subsection{Experiments on Artificial Datasets}
 For all artificial datasets in the test, all oversampling algorithms only add synthetic data to the minority class to match the majority class in the training set, and the same partition of the datasets was used for all oversampling algorithms. I use b-kde classifier for all classification tasks in this test. Ten rounds of 10-folds cross-validation were performed. I compute an average performance of all experiments in the evaluation. A summary of all the results are shown in Table \ref{tab: results_synthetic_data}. I show results of $Precision$, $Recall$, $\fscore$ and $\gscore$ for the majority and minority classes separately to give a more clear insight about how the majority and minority classes are affected by each method in the classification. In Table \ref{tab: results_synthetic_data}, from up to down, results are organized to 6 chunks corresponding to 6 artificial datasets in total. The imbalance ratio $r_{imb}$ and the distance $d_{\mu}$ between centers of the majority and minority classes are shown in the front of each chunk to indicate the beginning of the results.
 
 Some patterns can be easily seen from the results in Table \ref{tab: results_synthetic_data}. In all cases, the classifiers trained using original dataset misclassified the minority class all the time. This is because without oversampling the minority class in the original dataset, the b-kde classifier tries to compromise every single sample of the majority class, thus push and mistakenly expand the decision boundary towards the minority class.
@@ -2860,7 +2824,7 @@ Compared with these methods, CGMOS achieves the best results in tests of all six
 
 It also could be easily seen from the results in Table \ref{tab: results_synthetic_data} and the ROC graphs in Figure \ref{fig: synthetic roc} that when the imbalance ratio $r_{imb}$ is lower, it is harder to get the minority class correctly classified. Similarly, there are more misclassified cases when the centers of the majority class and minority class move closer. Based on this observation, I can compute the standard deviation of AUC of all datasets from each method, which in turn can be used to relatively show the stability of each method. CGMOS has the standard deviation of $0.076$ which is the smallest when compared to all the other methods (Original=$0.146$, Dup=$0.165$, SMOTE=$0.097$, B-SMOTE=$0.153$, MWMOTE=$0.098$, ADASYN=$0.097$ and RAMOboost=$0.112$). Thus CGMOS is more robust and stable to use as compared with all the other competitors.
 
-\Subsubsection{Experiments on Real World Datasets}
+\Subsection{Experiments on Real World Datasets}
 This section presents the performance of CGMOS and all the other methods on 30 real-world datasets. The same experimental procedure as the one in the experiments of the artificial dataset was conducted. All results are averaged from 10 rounds of 10-folds cross-validations. A summary of the experiment results is shown in Table \ref{tab: results_real_data} and ROC graphs are shown in Figure \ref{fig: roc}.
 
 \begin{table}[ht]
@@ -2923,7 +2887,7 @@ Second, directly use synthetic data will most likely cause a failure or unsatisf
 Third, to eliminate the \textit{synthetic gap}, a general framework based on a neural network with novel architecture is proposed. The neural network is trained as a regressor to find out the relationship between two types of data automatically, thus can close the gap between two data. With this mechanism, synthetic data could better simulate actual data and used in machine learning procedure.
 
 Fourth, handling imbalanced datasets is a challenging problem that if not treated correctly results in reduced classification performance. Imbalanced datasets are commonly handled using minority oversampling, whereas the SMOTE algorithm is a successful oversampling algorithm with numerous extensions. SMOTE extensions do not have a theoretical guarantee during training to work better than SMOTE, and in many instances, their performance is data dependent. In this paper, I propose a novel extension to the SMOTE algorithm with a theoretical guarantee for improved classification performance. The proposed approach considers the classification performance of both the majority and
-minority classes. In the proposed approach CGMOS (Certainty Guided Minority OverSampling) new data points are added by considering certainty changes in the dataset. The paper provides proof that the proposed algorithm is guaranteed to work　better than SMOTE for training data. Further experimental results on 30 real-world datasets show
+minority classes. In the proposed approach CGMOS (Certainty Guided Minority OverSampling) new data points are added by considering certainty changes in the dataset. The paper provides proof that the proposed algorithm is guaranteed to work better than SMOTE for training data. Further experimental results on 30 real-world datasets show
 that CGMOS works better than existing algorithms when using six different classifiers.
 \clearpage
 
